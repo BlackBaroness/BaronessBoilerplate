@@ -40,9 +40,6 @@ val Color.asTextColor: TextColor
 fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver): Unit =
     sendMessage(unparsed.parseMiniMessage(*tagResolvers))
 
-fun Audience.sendMessage(unparsed: String, tagResolvers: Array<TagResolver>) =
-    sendMessage(unparsed, *tagResolvers)
-
 fun Audience.sendMessage(unparsed: String, tagResolvers: Iterable<TagResolver>) =
     sendMessage(unparsed, *tagResolvers.toList().toTypedArray())
 
@@ -51,9 +48,6 @@ fun Audience.sendMessage(unparsed: String, tagResolvers: Collection<TagResolver>
 
 fun Audience.sendActionBar(unparsed: String, vararg tagResolvers: TagResolver): Unit =
     sendActionBar(unparsed.parseMiniMessage(*tagResolvers))
-
-fun Audience.sendActionBar(unparsed: String, tagResolvers: Array<TagResolver>) =
-    sendActionBar(unparsed, *tagResolvers)
 
 fun Audience.sendActionBar(unparsed: String, tagResolvers: Iterable<TagResolver>) =
     sendActionBar(unparsed, *tagResolvers.toList().toTypedArray())
@@ -78,9 +72,6 @@ fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
     return MiniMessage.miniMessage().deserialize(this, *tagResolvers)
         .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 }
-
-fun String.parseMiniMessage(tagResolvers: Array<TagResolver>) =
-    parseMiniMessage(*tagResolvers)
 
 fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>) =
     parseMiniMessage(*tagResolvers.toList().toTypedArray())
