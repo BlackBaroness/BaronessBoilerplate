@@ -1,8 +1,8 @@
 package io.github.blackbaroness.boilerplates.configurate.adventure
 
-import io.blackbaroness.boilerplates.configurate.adventure.type.MiniMessageComponent
 import io.github.blackbaroness.boilerplates.adventure.parseMiniMessage
 import io.github.blackbaroness.boilerplates.adventure.replace
+import io.github.blackbaroness.boilerplates.configurate.adventure.type.MiniMessageComponent
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver

@@ -9,8 +9,8 @@ import xyz.xenondevs.invui.gui.PagedGui
 import xyz.xenondevs.invui.gui.structure.Markers
 import xyz.xenondevs.invui.item.Item
 import xyz.xenondevs.invui.item.ItemWrapper
+import xyz.xenondevs.invui.window.Window
 import xyz.xenondevs.invui.window.type.context.setTitle
-import java.awt.Window
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -60,7 +60,9 @@ inline fun Window.Builder.Normal.Single.import(
 fun MenuConfig.createPagedGui(): PagedGui.Builder<Item> = PagedGui.items().apply {
     setStructure(*this@createPagedGui.structure.toTypedArray())
     addIngredient('.', Markers.CONTENT_LIST_SLOT_HORIZONTAL)
-    this@createPagedGui.customItems.forEach { (key, item) -> addIngredient(key, ItemWrapper(item.toItem())) }
+    customItems.forEach { (key, item) ->
+        addIngredient(key, ItemWrapper(item.unsafeItem))
+    }
 }
 
 
