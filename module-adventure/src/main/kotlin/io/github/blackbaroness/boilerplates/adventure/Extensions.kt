@@ -1,5 +1,6 @@
 package io.github.blackbaroness.boilerplates.adventure
 
+import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.format.TextColor
@@ -36,6 +37,30 @@ val TextColor.asJwtColor: Color
 val Color.asTextColor: TextColor
     get() = TextColor.color(red, green, blue)
 
+fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver): Unit =
+    sendMessage(unparsed.parseMiniMessage(*tagResolvers))
+
+fun Audience.sendMessage(unparsed: String, tagResolvers: Array<TagResolver>) =
+    sendMessage(unparsed, *tagResolvers)
+
+fun Audience.sendMessage(unparsed: String, tagResolvers: Iterable<TagResolver>) =
+    sendMessage(unparsed, *tagResolvers.toList().toTypedArray())
+
+fun Audience.sendMessage(unparsed: String, tagResolvers: Collection<TagResolver>) =
+    sendMessage(unparsed, *tagResolvers.toTypedArray())
+
+fun Audience.sendActionBar(unparsed: String, vararg tagResolvers: TagResolver): Unit =
+    sendActionBar(unparsed.parseMiniMessage(*tagResolvers))
+
+fun Audience.sendActionBar(unparsed: String, tagResolvers: Array<TagResolver>) =
+    sendActionBar(unparsed, *tagResolvers)
+
+fun Audience.sendActionBar(unparsed: String, tagResolvers: Iterable<TagResolver>) =
+    sendActionBar(unparsed, *tagResolvers.toList().toTypedArray())
+
+fun Audience.sendActionBar(unparsed: String, tagResolvers: Collection<TagResolver>) =
+    sendActionBar(unparsed, *tagResolvers.toTypedArray())
+
 fun List<TextColor>.createMiniMessageGradient() = when (size) {
     0 -> ""
     1 -> "<color:${single().asHexString()}>"
@@ -53,3 +78,12 @@ fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
     return MiniMessage.miniMessage().deserialize(this, *tagResolvers)
         .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 }
+
+fun String.parseMiniMessage(tagResolvers: Array<TagResolver>) =
+    parseMiniMessage(*tagResolvers)
+
+fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>) =
+    parseMiniMessage(*tagResolvers.toList().toTypedArray())
+
+fun String.parseMiniMessage(tagResolvers: Collection<TagResolver>) =
+    parseMiniMessage(*tagResolvers.toTypedArray())

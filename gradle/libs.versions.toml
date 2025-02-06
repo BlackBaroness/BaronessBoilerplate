@@ -29,6 +29,7 @@ adventure-serializer-legacy = { module = "net.kyori:adventure-text-serializer-le
 adventure-serializer-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "adventure" }
 adventure-serializer-bungeecord = { module = "net.kyori:adventure-text-serializer-bungeecord", version = "4.3.4" }
 adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-platform-bukkit = { module = "net.kyori:adventure-platform-bukkit", version = "4.3.4" }
 
 invui-core = { module = "xyz.xenondevs.invui:invui", version.ref = "invui" }
 invui-kotlin = { module = "xyz.xenondevs.invui:invui-kotlin", version.ref = "invui" }

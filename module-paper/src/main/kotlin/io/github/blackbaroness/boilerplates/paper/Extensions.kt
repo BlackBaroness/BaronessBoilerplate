@@ -1,10 +1,15 @@
 package io.github.blackbaroness.boilerplates.paper
 
+import io.github.blackbaroness.boilerplates.adventure.asLegacy
+import io.github.blackbaroness.boilerplates.base.Boilerplate
+import net.kyori.adventure.audience.Audience
+import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -56,6 +61,16 @@ val Color.asAwtColor: java.awt.Color
 val java.awt.Color.asBukkitColor: Color
     get() = Color.fromRGB(red, green, blue)
 
+val CommandSender.adventure: Audience
+    get() = if (Boilerplate.isNativeAdventureApiAvailable) this else bukkitAudiencesSafe.sender(this)
+
+val Collection<CommandSender>.adventure: Audience
+    get() = Audience.audience(map { it.adventure })
+
+@Suppress("DEPRECATION")
+fun Player.kick(reason: ComponentLike?) {
+    if (Boilerplate.isNativeAdventureApiAvailable) kick(reason) else kickPlayer(reason?.asLegacy)
+}
 
 fun Inventory.toMap(clone: Boolean = true): Map<Int, ItemStack?> {
     return contents.asSequence()
@@ -102,3 +117,6 @@ inline fun <reified T : Event> Plugin.eventListener(
 
     return listener
 }
+
+private val bukkitAudiencesSafe: BukkitAudiences
+    get() = bukkitAudiences ?: throw IllegalStateException("Adventure is not initialized")
