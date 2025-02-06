@@ -1,6 +1,6 @@
 plugins {
     `kotlin-conventions`
-    `java-library`
+    `publish-conventions`
 }
 
 dependencies {
