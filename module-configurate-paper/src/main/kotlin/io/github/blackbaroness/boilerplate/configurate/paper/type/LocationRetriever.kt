@@ -31,6 +31,6 @@ data class LocationRetriever(
     override fun toString() = Json.encodeToString(this)
 
     companion object {
-        fun fromString(string: String) = Json.decodeFromString<io.github.blackbaroness.boilerplate.configurate.paper.type.LocationRetriever>(string)
+        fun fromString(string: String) = Json.decodeFromString<LocationRetriever>(string)
     }
 }

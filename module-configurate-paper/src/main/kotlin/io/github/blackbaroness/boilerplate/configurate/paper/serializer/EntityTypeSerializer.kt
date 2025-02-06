@@ -6,7 +6,7 @@ import org.bukkit.Registry
 import org.bukkit.entity.EntityType
 
 class EntityTypeSerializer :
-    io.github.blackbaroness.boilerplates.configurate.paper.serializer.KeyedSerializer<EntityType>() {
+    io.github.blackbaroness.boilerplate.configurate.paper.serializer.KeyedSerializer<EntityType>() {
 
     override fun resolveEntityFromKey(key: NamespacedKey): EntityType {
         return Registry.ENTITY_TYPE.get(key)
