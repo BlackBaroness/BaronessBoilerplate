@@ -4,12 +4,15 @@ configurate = "4.1.2"
 adventure = "4.18.0"
 invui = "1.44"
 guice = "7.0.0"
+litecommands = "3.9.7"
 
 [libraries]
 paper-v1_v16_v5 = { module = "com.destroystokyo.paper:paper-api", version.ref = "minecraft-v1_v16_v5" }
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
 mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.20.0" }
+litecommands-core = { module = "dev.rollczi:litecommands-core", version.ref = "litecommands" }
+litecommands-framework = { module = "dev.rollczi:litecommands-framework", version.ref = "litecommands" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.1" }

@@ -12,5 +12,6 @@ include(
     "module-configurate-paper",
     "module-hibernate",
     "module-invui",
+    "module-litecommands",
     "module-paper",
 )
