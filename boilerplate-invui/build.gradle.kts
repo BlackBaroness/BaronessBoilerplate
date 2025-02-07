@@ -25,3 +25,7 @@ dependencies {
     compileOnly(libs.mccoroutine.folia)
     compileOnly(libs.kotlinx.coroutines)
 }
+
+kotlin {
+    jvmToolchain(17)
+}

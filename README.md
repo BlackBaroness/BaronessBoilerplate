@@ -6,8 +6,20 @@ maven("https://jitpack.io")
 implementation("com.github.BlackBaroness.BaronessBoilerplate:MODULE:VERSION")
 ```
 
-You need to have Java 17 (including toolchain in Gradle, don't forget about that, otherwise it won't import the dependency)
+## Minimum Java version:
 
-Feel free to make PRs
+| Module                            | Version | Reason               |
+|-----------------------------------|---------|----------------------|
+| boilerplate-base                  | 11      | -                    |
+| boilerplate-adventure             | 11      | -                    |
+| boilerplate-configurate           | 11      | -                    |
+| boilerplate-configurate-adventure | 11      | -                    |
+| boilerplate-configurate-paper     | 11      | -                    |
+| boilerplate-hibernate             | 11      | -                    |
+| boilerplate-invui                 | 17      | depends on Folia API |
+| boilerplate-litecommands          | 11      | -                    |
+| boilerplate-paper                 | 11      | -                    |
 
-Have fun
+### Feel free to make PRs
+
+### Have fun!
