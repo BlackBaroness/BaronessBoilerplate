@@ -5,13 +5,13 @@ plugins {
 rootProject.name = "BaronessBoilerplate"
 
 include(
-    "module-adventure",
-    "module-base",
-    "module-configurate",
-    "module-configurate-adventure",
-    "module-configurate-paper",
-    "module-hibernate",
-    "module-invui",
-    "module-litecommands",
-    "module-paper",
+    "boilerplate-adventure",
+    "boilerplate-base",
+    "boilerplate-configurate",
+    "boilerplate-configurate-adventure",
+    "boilerplate-configurate-paper",
+    "boilerplate-hibernate",
+    "boilerplate-invui",
+    "boilerplate-litecommands",
+    "boilerplate-paper",
 )
