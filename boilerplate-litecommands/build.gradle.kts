@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":module-base"))
+    api(project(":boilerplate-base"))
     compileOnly(libs.litecommands.core)
     compileOnly(libs.litecommands.framework)
 }

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":module-base"))
+    api(project(":boilerplate-base"))
     compileOnly(libs.adventure.core)
     compileOnly(libs.adventure.serializer.gson)
     compileOnly(libs.adventure.serializer.legacy)

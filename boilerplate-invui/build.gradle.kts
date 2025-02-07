@@ -9,10 +9,10 @@ repositories {
 }
 
 dependencies {
-    api(project(":module-base"))
-    api(project(":module-paper"))
-    api(project(":module-configurate-adventure"))
-    api(project(":module-configurate-paper"))
+    api(project(":boilerplate-base"))
+    api(project(":boilerplate-paper"))
+    api(project(":boilerplate-configurate-adventure"))
+    api(project(":boilerplate-configurate-paper"))
     compileOnly(libs.configurate.core)
     compileOnly(libs.configurate.extra.kotlin)
     compileOnly(libs.paper.v1.v16.v5)

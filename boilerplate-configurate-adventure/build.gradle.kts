@@ -4,9 +4,9 @@ plugins {
 }
 
 dependencies {
-    api(project(":module-base"))
-    api(project(":module-configurate"))
-    api(project(":module-adventure"))
+    api(project(":boilerplate-base"))
+    api(project(":boilerplate-configurate"))
+    api(project(":boilerplate-adventure"))
     compileOnly(libs.configurate.core)
     compileOnly(libs.configurate.extra.kotlin)
     compileOnly(libs.adventure.core)

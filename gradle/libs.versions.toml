@@ -7,22 +7,19 @@ guice = "7.0.0"
 litecommands = "3.9.7"
 
 [libraries]
-paper-v1_v16_v5 = { module = "com.destroystokyo.paper:paper-api", version.ref = "minecraft-v1_v16_v5" }
-durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
-nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
-mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.20.0" }
-litecommands-core = { module = "dev.rollczi:litecommands-core", version.ref = "litecommands" }
-litecommands-framework = { module = "dev.rollczi:litecommands-framework", version.ref = "litecommands" }
-
+# KotlinX
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.1" }
-
+# LiteCommands
+litecommands-core = { module = "dev.rollczi:litecommands-core", version.ref = "litecommands" }
+litecommands-framework = { module = "dev.rollczi:litecommands-framework", version.ref = "litecommands" }
+# Guice
 guice-core = { module = "com.google.inject:guice", version.ref = "guice" }
 guice-assistedinject = { module = "com.google.inject.extensions:guice-assistedinject", version.ref = "guice" }
-
+# Configurate
 configurate-core = { module = "org.spongepowered:configurate-core", version.ref = "configurate" }
 configurate-extra-kotlin = { module = "org.spongepowered:configurate-extra-kotlin", version.ref = "configurate" }
-
+# Adventure
 adventure-core = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
 adventure-serializer-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "adventure" }
@@ -30,6 +27,14 @@ adventure-serializer-plain = { module = "net.kyori:adventure-text-serializer-pla
 adventure-serializer-bungeecord = { module = "net.kyori:adventure-text-serializer-bungeecord", version = "4.3.4" }
 adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
 adventure-platform-bukkit = { module = "net.kyori:adventure-platform-bukkit", version = "4.3.4" }
-
+# InvUI
 invui-core = { module = "xyz.xenondevs.invui:invui", version.ref = "invui" }
 invui-kotlin = { module = "xyz.xenondevs.invui:invui-kotlin", version.ref = "invui" }
+# Misc
+paper-v1_v16_v5 = { module = "com.destroystokyo.paper:paper-api", version.ref = "minecraft-v1_v16_v5" }
+durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
+nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
+mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.20.0" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.6.Final" }
+h2 = { module = "com.h2database:h2", version = "2.3.232" }
+mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.1" }

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":module-base"))
+    api(project(":boilerplate-base"))
     compileOnly(libs.configurate.core)
     compileOnly(libs.configurate.extra.kotlin)
     compileOnly(libs.durationserializer)
