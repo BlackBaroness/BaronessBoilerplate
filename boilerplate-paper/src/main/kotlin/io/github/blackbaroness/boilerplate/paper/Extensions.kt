@@ -119,4 +119,4 @@ inline fun <reified T : Event> Plugin.eventListener(
 }
 
 private val bukkitAudiencesSafe: BukkitAudiences
-    get() = bukkitAudiences ?: throw IllegalStateException("Adventure is not initialized")
+    get() = bukkitAudiences as? BukkitAudiences ?: throw IllegalStateException("Adventure is not initialized")

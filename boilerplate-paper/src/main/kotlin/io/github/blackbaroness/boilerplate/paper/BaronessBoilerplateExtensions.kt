@@ -10,7 +10,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 
-internal var bukkitAudiences: BukkitAudiences? = null
+internal var bukkitAudiences: Any? = null
 
 fun Boilerplate.resolveNamespacedKey(input: String): NamespacedKey? =
     if (input.contains(':'))
@@ -34,8 +34,8 @@ fun Boilerplate.initializeAdventure(plugin: Plugin) {
     }
 
     if (isNativeAdventureApiAvailable) {
-        plugin.slF4JLogger.info("Using the native Adventure")
         // No need to initialize since we can use the native API
+        plugin.slF4JLogger.info("Using the native Adventure")
         return
     }
 
@@ -44,7 +44,7 @@ fun Boilerplate.initializeAdventure(plugin: Plugin) {
 }
 
 fun Boilerplate.destroyAdventure() {
-    bukkitAudiences?.close()
+    bukkitAudiences?.let { it as BukkitAudiences}?.close()
     bukkitAudiences = null
 }
 
