@@ -38,3 +38,4 @@ mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia
 hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.6.Final" }
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.1" }
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }

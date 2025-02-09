@@ -14,5 +14,6 @@ dependencies {
 
     // Database drivers
     compileOnly(libs.mariadb)
+    compileOnly(libs.postgresql)
     compileOnly(libs.h2)
 }
