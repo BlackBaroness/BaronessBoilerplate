@@ -44,7 +44,7 @@ fun Boilerplate.initializeAdventure(plugin: Plugin) {
 }
 
 fun Boilerplate.destroyAdventure() {
-    bukkitAudiences?.let { it as BukkitAudiences}?.close()
+    bukkitAudiences?.let { it as BukkitAudiences }?.close()
     bukkitAudiences = null
 }
 

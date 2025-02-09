@@ -39,3 +39,4 @@ hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version 
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.1" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
+vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
