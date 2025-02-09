@@ -78,10 +78,10 @@ fun Inventory.toMap(clone: Boolean = true): Map<Int, ItemStack?> {
         .toMap()
 }
 
-fun Player.giveOrDrop(items: Collection<ItemStack>, canPickup: Boolean, willAge: Boolean) {
+fun Player.giveOrDrop(items: Collection<ItemStack>, pickupProtect: Boolean, willAge: Boolean) {
     inventory.addItem(*items.toTypedArray()).forEach { (_, item) ->
         location.world.dropItem(location, item) { droppedItem ->
-            droppedItem.owner = if (canPickup) uniqueId else null
+            droppedItem.owner = if (pickupProtect) uniqueId else null
             droppedItem.setWillAge(willAge)
         }
     }
