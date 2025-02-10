@@ -9,6 +9,8 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
+import java.lang.invoke.MethodHandle
+import java.lang.invoke.MethodHandles
 
 internal var bukkitAudiences: Any? = null
 
@@ -46,5 +48,15 @@ fun Boilerplate.initializeAdventure(plugin: Plugin) {
 fun Boilerplate.destroyAdventure() {
     bukkitAudiences?.let { it as BukkitAudiences }?.close()
     bukkitAudiences = null
+}
+
+val Boilerplate.methodMaterialGetDefaultAttributeModifiers: MethodHandle? by lazy {
+    try {
+        return@lazy MethodHandles.lookup().unreflect(
+            Material::class.java.getDeclaredMethod("getDefaultAttributeModifiers")
+        )
+    } catch (e: NoSuchMethodException) {
+        return@lazy null
+    }
 }
 

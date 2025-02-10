@@ -1,5 +1,6 @@
 [versions]
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
+minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.1.2"
 adventure = "4.18.0"
 invui = "1.44"
@@ -30,8 +31,10 @@ adventure-platform-bukkit = { module = "net.kyori:adventure-platform-bukkit", ve
 # InvUI
 invui-core = { module = "xyz.xenondevs.invui:invui", version.ref = "invui" }
 invui-kotlin = { module = "xyz.xenondevs.invui:invui-kotlin", version.ref = "invui" }
-# Misc
+# Paper
 paper-v1_v16_v5 = { module = "com.destroystokyo.paper:paper-api", version.ref = "minecraft-v1_v16_v5" }
+paper-v1_v21_v4 = { module = "io.papermc.paper:paper-api", version.ref = "minecraft-v1_v21_v4" }
+# Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
 mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.20.0" }
