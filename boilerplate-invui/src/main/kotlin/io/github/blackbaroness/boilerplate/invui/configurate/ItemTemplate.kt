@@ -79,11 +79,9 @@ data class ItemTemplate(
         }
 
         if (flags != null) {
-            if (!meta.hasAttributeModifiers()) {
-                Boilerplate.methodMaterialGetDefaultAttributeModifiers?.also { method ->
-                    @Suppress("UNCHECKED_CAST")
-                    meta.attributeModifiers = method.invoke(material) as Multimap<Attribute, AttributeModifier>
-                }
+            Boilerplate.methodMaterialGetDefaultAttributeModifiers?.also { method ->
+                @Suppress("UNCHECKED_CAST")
+                meta.attributeModifiers = method.invoke(material) as Multimap<Attribute, AttributeModifier>
             }
             meta.addItemFlags(*flags.toTypedArray())
         }
