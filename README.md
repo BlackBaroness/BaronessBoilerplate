@@ -16,7 +16,7 @@ implementation("com.github.BlackBaroness.BaronessBoilerplate:MODULE:VERSION")
 | boilerplate-configurate-adventure | 11      | -                    |
 | boilerplate-configurate-paper     | 11      | -                    |
 | boilerplate-hibernate             | 11      | -                    |
-| boilerplate-invui                 | 17      | depends on Folia API |
+| boilerplate-invui                 | 11      | -                    |
 | boilerplate-litecommands          | 11      | -                    |
 | boilerplate-paper                 | 11      | -                    |
 
