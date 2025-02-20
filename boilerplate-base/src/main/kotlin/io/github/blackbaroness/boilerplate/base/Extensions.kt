@@ -1,5 +1,7 @@
 package io.github.blackbaroness.boilerplate.base
 
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.listDirectoryEntries
@@ -77,3 +79,6 @@ fun String?.toUuidOrNull(): UUID? {
         null
     }
 }
+
+fun copyAndClose(from: InputStream, to: OutputStream) =
+    from.use { to.use { from.copyTo(to) } }
