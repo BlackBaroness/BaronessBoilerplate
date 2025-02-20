@@ -21,7 +21,7 @@ dependencies {
     compileOnly(libs.adventure.minimessage)
 
     // Optional:
-    api(project(":boilerplate-paper"))
+    compileOnly(project(":boilerplate-paper"))
     compileOnly(libs.paper.v1.v16.v5)
     compileOnly(libs.adventure.core)
     compileOnly(libs.adventure.minimessage)
