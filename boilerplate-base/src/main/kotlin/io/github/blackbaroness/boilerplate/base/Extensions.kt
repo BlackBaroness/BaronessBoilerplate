@@ -1,6 +1,5 @@
 package io.github.blackbaroness.boilerplate.base
 
-import com.google.common.net.InetAddresses
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path

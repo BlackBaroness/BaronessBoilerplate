@@ -41,19 +41,19 @@ fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver): Un
     sendMessage(unparsed.parseMiniMessage(*tagResolvers))
 
 fun Audience.sendMessage(unparsed: String, tagResolvers: Iterable<TagResolver>) =
-    sendMessage(unparsed, *tagResolvers.toList().toTypedArray())
+    sendMessage(unparsed, TagResolver.resolver(tagResolvers))
 
 fun Audience.sendMessage(unparsed: String, tagResolvers: Collection<TagResolver>) =
-    sendMessage(unparsed, *tagResolvers.toTypedArray())
+    sendMessage(unparsed, TagResolver.resolver(tagResolvers))
 
 fun Audience.sendActionBar(unparsed: String, vararg tagResolvers: TagResolver): Unit =
     sendActionBar(unparsed.parseMiniMessage(*tagResolvers))
 
 fun Audience.sendActionBar(unparsed: String, tagResolvers: Iterable<TagResolver>) =
-    sendActionBar(unparsed, *tagResolvers.toList().toTypedArray())
+    sendActionBar(unparsed, TagResolver.resolver(tagResolvers))
 
 fun Audience.sendActionBar(unparsed: String, tagResolvers: Collection<TagResolver>) =
-    sendActionBar(unparsed, *tagResolvers.toTypedArray())
+    sendActionBar(unparsed, TagResolver.resolver(tagResolvers))
 
 fun List<TextColor>.createMiniMessageGradient() = when (size) {
     0 -> ""
@@ -74,7 +74,7 @@ fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
 }
 
 fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>) =
-    parseMiniMessage(*tagResolvers.toList().toTypedArray())
+    parseMiniMessage(TagResolver.resolver(tagResolvers))
 
 fun String.parseMiniMessage(tagResolvers: Collection<TagResolver>) =
-    parseMiniMessage(*tagResolvers.toTypedArray())
+    parseMiniMessage(TagResolver.resolver(tagResolvers))
