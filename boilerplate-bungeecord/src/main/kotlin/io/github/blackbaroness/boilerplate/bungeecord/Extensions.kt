@@ -5,15 +5,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import net.bytebuddy.ByteBuddy
 import net.bytebuddy.implementation.MethodDelegation
+import net.kyori.adventure.audience.Audience
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
+import net.md_5.bungee.api.CommandSender
 import net.md_5.bungee.api.ServerConnectRequest
 import net.md_5.bungee.api.chat.BaseComponent
 import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.connection.Connection
 import net.md_5.bungee.api.event.AsyncEvent
-import net.md_5.bungee.api.plugin.Cancellable
 import net.md_5.bungee.api.plugin.Event
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
@@ -56,15 +58,12 @@ val ServerConnectRequestBuilder_sendFeedback_setter: MethodHandle? by lazy {
 }
 
 inline fun <reified T : Event> Plugin.eventListener(
-    attached: Boolean,
+    attended: Boolean,
     priority: Byte = EventPriority.NORMAL,
-    ignoreCancelled: Boolean = true,
     autoHandleIntents: Boolean = true,
     crossinline action: suspend (T) -> Unit,
 ) = generateEventListener(this, T::class, priority = priority) { event ->
-    if (ignoreCancelled && event is Cancellable && event.isCancelled) return@generateEventListener
-
-    if (!attached) {
+    if (!attended) {
         launch(Dispatchers.Default) { action.invoke(event) }
         return@generateEventListener
     }
@@ -108,3 +107,12 @@ fun <T : Event> generateEventListener(
     plugin.proxy.pluginManager.registerListener(plugin, listener)
     return Closeable { plugin.proxy.pluginManager.unregisterListener(listener) }
 }
+
+val bungeeAudiencesSafe: BungeeAudiences
+    get() = bungeeAudiences ?: throw IllegalStateException("Adventure is not initialized")
+
+val CommandSender.adventure: Audience
+    get() = bungeeAudiencesSafe.sender(this)
+
+val Collection<CommandSender>.adventure: Audience
+    get() = Audience.audience(map { it.adventure })
