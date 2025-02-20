@@ -1,6 +1,7 @@
 package io.github.blackbaroness.boilerplate.hibernate
 
 import io.github.blackbaroness.boilerplate.configurate.type.MariaDbConfiguration
+import io.github.blackbaroness.boilerplate.configurate.type.PostgresConfiguration
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.hibernate.TransactionManagementException
@@ -31,6 +32,21 @@ fun SessionFactoryBuilder.mariadb(config: MariaDbConfiguration) {
         append(config.parameters.joinToString(prefix = "?", separator = "&"))
     }
     driver = org.mariadb.jdbc.Driver::class
+}
+
+fun SessionFactoryBuilder.postgresql(config: PostgresConfiguration) {
+    user = config.user
+    password = config.password
+    url = buildString {
+        append("jdbc:postgresql://")
+        append(config.address)
+        append(':')
+        append(config.port)
+        append('/')
+        append(config.database)
+        append(config.parameters.joinToString(prefix = "?", separator = "&"))
+    }
+    driver = org.postgresql.Driver::class
 }
 
 fun SessionFactoryBuilder.h2(directory: Path, name: String) {
