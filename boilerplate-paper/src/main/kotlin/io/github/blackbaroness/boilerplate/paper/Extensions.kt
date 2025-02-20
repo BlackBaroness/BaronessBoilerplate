@@ -34,6 +34,9 @@ fun Player.playSound(location: Location, sound: Sound) =
 fun Player.playSound(sound: Sound) =
     playSound(location, sound)
 
+fun Location.playSound(sound: Sound) =
+    world.playSound(this, sound, 1f, 1f)
+
 fun Listener.unregister() =
     HandlerList.unregisterAll(this)
 
