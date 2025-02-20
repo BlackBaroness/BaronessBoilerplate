@@ -9,6 +9,9 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.java.JavaPlugin
+import java.lang.invoke.MethodHandle
+import java.lang.invoke.MethodHandles
 
 internal var bukkitAudiences: Any? = null
 
@@ -47,4 +50,18 @@ fun Boilerplate.destroyAdventure() {
     bukkitAudiences?.let { it as BukkitAudiences }?.close()
     bukkitAudiences = null
 }
+
+val Boilerplate.methodMaterialGetDefaultAttributeModifiers: MethodHandle? by lazy {
+    try {
+        val methodHandle = MethodHandles.lookup()
+            .unreflect(Material::class.java.getDeclaredMethod("getDefaultAttributeModifiers"))
+        logger.info("This server supports Material#getDefaultAttributeModifiers API!")
+        methodHandle
+    } catch (e: NoSuchMethodException) {
+        logger.info("This server doesn't support Material#getDefaultAttributeModifiers API!")
+        null
+    }
+}
+
+private val logger by lazy { JavaPlugin.getProvidingPlugin(Boilerplate::class.java).slF4JLogger }
 

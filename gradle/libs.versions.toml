@@ -1,7 +1,8 @@
 [versions]
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
+minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.1.2"
-adventure = "4.18.0"
+adventure = "4.19.0"
 invui = "1.44"
 guice = "7.0.0"
 litecommands = "3.9.7"
@@ -30,13 +31,15 @@ adventure-platform-bukkit = { module = "net.kyori:adventure-platform-bukkit", ve
 # InvUI
 invui-core = { module = "xyz.xenondevs.invui:invui", version.ref = "invui" }
 invui-kotlin = { module = "xyz.xenondevs.invui:invui-kotlin", version.ref = "invui" }
-# Misc
+# Paper
 paper-v1_v16_v5 = { module = "com.destroystokyo.paper:paper-api", version.ref = "minecraft-v1_v16_v5" }
+paper-v1_v21_v4 = { module = "io.papermc.paper:paper-api", version.ref = "minecraft-v1_v21_v4" }
+# Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
-mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.20.0" }
-hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.6.Final" }
+mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia-api", version = "2.21.0" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.8.Final" }
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
-mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.1" }
+mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.2" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
