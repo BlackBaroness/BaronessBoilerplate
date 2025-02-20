@@ -1,7 +1,9 @@
 package io.github.blackbaroness.boilerplate.paper
 
+import com.github.shynixn.mccoroutine.folia.launch
 import io.github.blackbaroness.boilerplate.adventure.asLegacy
 import io.github.blackbaroness.boilerplate.base.Boilerplate
+import kotlinx.coroutines.runBlocking
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
@@ -105,21 +107,35 @@ fun Plugin.saveResource(internalPath: String, destination: Path, overwrite: Bool
 }
 
 inline fun <reified T : Event> Plugin.eventListener(
+    attended: Boolean,
     priority: EventPriority = EventPriority.NORMAL,
-    crossinline block: (T) -> Unit,
+    crossinline block: suspend (T) -> Unit,
+): Listener = generateEventListener<T>(priority = priority, plugin = this) { event ->
+    if (!attended) {
+        launch { block.invoke(event) }
+        return@generateEventListener
+    }
+
+    runBlocking {
+        block.invoke(event)
+    }
+}
+
+inline fun <reified T : Event> generateEventListener(
+    plugin: Plugin,
+    priority: EventPriority,
+    crossinline action: (T) -> Unit
 ): Listener {
     val listener = object : Listener {}
-
-    server.pluginManager.registerEvent(
+    plugin.server.pluginManager.registerEvent(
         T::class.java,
         listener,
         priority,
-        { _, event -> if (event is T) block.invoke(event) },
-        this
+        { _, event -> if (event is T) action.invoke(event) },
+        plugin
     )
-
     return listener
 }
 
-private val bukkitAudiencesSafe: BukkitAudiences
+val bukkitAudiencesSafe: BukkitAudiences
     get() = bukkitAudiences as? BukkitAudiences ?: throw IllegalStateException("Adventure is not initialized")

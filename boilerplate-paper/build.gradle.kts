@@ -13,4 +13,6 @@ dependencies {
     compileOnly(libs.paper.v1.v16.v5)
     compileOnly(libs.adventure.serializer.bungeecord)
     compileOnly(libs.adventure.platform.bukkit)
+    compileOnly(libs.kotlinx.coroutines)
+    compileOnly(libs.mccoroutine.folia)
 }
