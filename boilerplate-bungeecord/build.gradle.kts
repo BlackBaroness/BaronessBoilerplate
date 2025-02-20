@@ -3,6 +3,10 @@ plugins {
     `publish-conventions`
 }
 
+repositories {
+    maven("https://libraries.minecraft.net/") // Brigadier (for BungeeCord)
+}
+
 dependencies {
     api(project(":boilerplate-base"))
     api(project(":boilerplate-adventure"))
