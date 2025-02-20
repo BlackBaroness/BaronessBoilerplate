@@ -1,7 +1,7 @@
-package io.github.blackbaroness.boilerplate.configurate.adventure.type
+package io.github.blackbaroness.boilerplate.configurate.type
 
 import io.github.blackbaroness.boilerplate.adventure.parseMiniMessage
-import io.github.blackbaroness.boilerplate.configurate.adventure.asMiniMessageComponent
+import io.github.blackbaroness.boilerplate.configurate.asMiniMessageComponent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver

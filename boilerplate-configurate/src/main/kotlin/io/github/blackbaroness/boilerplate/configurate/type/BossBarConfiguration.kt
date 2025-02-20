@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.adventure.type
+package io.github.blackbaroness.boilerplate.configurate.type
 
 import net.kyori.adventure.bossbar.BossBar
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver

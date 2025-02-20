@@ -1,7 +1,7 @@
-package io.github.blackbaroness.boilerplate.configurate.adventure.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import io.github.blackbaroness.boilerplate.adventure.parseMiniMessage
-import io.github.blackbaroness.boilerplate.configurate.adventure.type.MiniMessageComponent
+import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
 import org.spongepowered.configurate.ConfigurationNode
 import org.spongepowered.configurate.serialize.TypeSerializer
 import java.lang.reflect.Type

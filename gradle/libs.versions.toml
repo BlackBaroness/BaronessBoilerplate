@@ -1,4 +1,5 @@
 [versions]
+kotlin = "2.1.10"
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
 minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.1.2"
@@ -43,3 +44,6 @@ h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.2" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
+
+[plugins]
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

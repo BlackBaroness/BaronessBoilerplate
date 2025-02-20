@@ -8,8 +8,6 @@ include(
     "boilerplate-adventure",
     "boilerplate-base",
     "boilerplate-configurate",
-    "boilerplate-configurate-adventure",
-    "boilerplate-configurate-paper",
     "boilerplate-hibernate",
     "boilerplate-invui",
     "boilerplate-litecommands",

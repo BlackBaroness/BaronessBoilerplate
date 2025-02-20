@@ -11,8 +11,7 @@ repositories {
 dependencies {
     api(project(":boilerplate-base"))
     api(project(":boilerplate-paper"))
-    api(project(":boilerplate-configurate-adventure"))
-    api(project(":boilerplate-configurate-paper"))
+    api(project(":boilerplate-configurate"))
     compileOnly(libs.configurate.core)
     compileOnly(libs.configurate.extra.kotlin)
     compileOnly(libs.paper.v1.v16.v5)

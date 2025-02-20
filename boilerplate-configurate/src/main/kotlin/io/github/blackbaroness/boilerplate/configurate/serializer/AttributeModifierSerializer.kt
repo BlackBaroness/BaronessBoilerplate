@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.paper.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.attribute.AttributeModifier.Operation

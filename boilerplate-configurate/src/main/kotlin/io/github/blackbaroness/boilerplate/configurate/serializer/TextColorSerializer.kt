@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.adventure.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import net.kyori.adventure.text.format.TextColor
 import org.spongepowered.configurate.ConfigurationNode

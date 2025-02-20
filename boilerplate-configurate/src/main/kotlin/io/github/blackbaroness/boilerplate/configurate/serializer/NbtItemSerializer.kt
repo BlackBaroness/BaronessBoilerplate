@@ -1,7 +1,7 @@
-package io.github.blackbaroness.boilerplate.configurate.paper.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import de.tr7zw.nbtapi.NBT
-import io.github.blackbaroness.boilerplate.configurate.paper.type.NbtItem
+import io.github.blackbaroness.boilerplate.configurate.type.NbtItem
 import org.spongepowered.configurate.ConfigurationNode
 import org.spongepowered.configurate.serialize.TypeSerializer
 import java.lang.reflect.Type

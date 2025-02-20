@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.paper.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import io.github.blackbaroness.boilerplate.base.asMinecraftTicks
 import net.kyori.adventure.util.Ticks

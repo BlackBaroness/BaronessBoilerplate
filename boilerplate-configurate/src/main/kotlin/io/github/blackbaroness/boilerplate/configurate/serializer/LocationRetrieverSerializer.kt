@@ -1,6 +1,6 @@
-package io.github.blackbaroness.boilerplate.configurate.paper.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
-import io.github.blackbaroness.boilerplate.configurate.paper.type.LocationRetriever
+import io.github.blackbaroness.boilerplate.configurate.type.LocationRetriever
 import org.spongepowered.configurate.ConfigurationNode
 import org.spongepowered.configurate.serialize.TypeSerializer
 import java.lang.reflect.Type

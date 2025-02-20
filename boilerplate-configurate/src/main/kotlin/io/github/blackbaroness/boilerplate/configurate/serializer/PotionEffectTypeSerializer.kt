@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.paper.serializer
+package io.github.blackbaroness.boilerplate.configurate.serializer
 
 import org.bukkit.potion.PotionEffectType
 import org.spongepowered.configurate.ConfigurationNode
