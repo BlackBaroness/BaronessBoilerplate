@@ -1,5 +1,6 @@
 package io.github.blackbaroness.boilerplate.base
 
+import com.google.common.net.InetAddresses
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.file.Path
@@ -82,3 +83,10 @@ fun String?.toUuidOrNull(): UUID? {
 
 fun copyAndClose(from: InputStream, to: OutputStream) =
     from.use { to.use { from.copyTo(to) } }
+
+val ipv4AddressRegex by lazy {
+    Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$")
+}
+
+val String.isValidIpv4Address: Boolean
+    get() = matches(ipv4AddressRegex)
