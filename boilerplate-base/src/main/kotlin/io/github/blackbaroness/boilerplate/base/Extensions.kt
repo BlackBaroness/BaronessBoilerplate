@@ -1,6 +1,7 @@
 package io.github.blackbaroness.boilerplate.base
 
 import java.nio.file.Path
+import java.util.*
 import kotlin.io.path.listDirectoryEntries
 
 inline fun <reified T> isClassPresent() =
@@ -64,5 +65,15 @@ fun Path.findSingleFile(glob: String = "*"): Path {
         0 -> throw IllegalStateException("$this contains no file matching glob '$glob'")
         1 -> return entries.first()
         else -> throw IllegalStateException("$this contains more than one file matching glob '$glob'")
+    }
+}
+
+fun String?.toUuidOrNull(): UUID? {
+    if (this == null) return null
+
+    return try {
+        UUID.fromString(this)
+    } catch (_: IllegalArgumentException) {
+        null
     }
 }
