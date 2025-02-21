@@ -43,3 +43,4 @@ h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.2" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
+placeholerapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
