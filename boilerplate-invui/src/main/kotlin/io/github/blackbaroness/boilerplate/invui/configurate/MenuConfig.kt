@@ -2,8 +2,8 @@
 
 package io.github.blackbaroness.boilerplate.invui.configurate
 
-import io.github.blackbaroness.boilerplate.configurate.adventure.asMiniMessageComponent
-import io.github.blackbaroness.boilerplate.configurate.adventure.type.MiniMessageComponent
+import io.github.blackbaroness.boilerplate.configurate.asMiniMessageComponent
+import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
 import org.spongepowered.configurate.objectmapping.ConfigSerializable
 import xyz.xenondevs.invui.gui.PagedGui
 import xyz.xenondevs.invui.gui.structure.Markers

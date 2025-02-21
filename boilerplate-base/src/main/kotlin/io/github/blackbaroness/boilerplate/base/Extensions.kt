@@ -1,6 +1,9 @@
 package io.github.blackbaroness.boilerplate.base
 
+import java.io.InputStream
+import java.io.OutputStream
 import java.nio.file.Path
+import java.util.*
 import kotlin.io.path.listDirectoryEntries
 
 inline fun <reified T> isClassPresent() =
@@ -66,3 +69,23 @@ fun Path.findSingleFile(glob: String = "*"): Path {
         else -> throw IllegalStateException("$this contains more than one file matching glob '$glob'")
     }
 }
+
+fun String?.toUuidOrNull(): UUID? {
+    if (this == null) return null
+
+    return try {
+        UUID.fromString(this)
+    } catch (_: IllegalArgumentException) {
+        null
+    }
+}
+
+fun copyAndClose(from: InputStream, to: OutputStream) =
+    from.use { to.use { from.copyTo(to) } }
+
+val ipv4AddressRegex by lazy {
+    Regex("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}\$")
+}
+
+val String.isValidIpv4Address: Boolean
+    get() = matches(ipv4AddressRegex)

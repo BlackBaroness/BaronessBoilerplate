@@ -4,15 +4,16 @@ plugins {
 }
 
 repositories {
-    maven("https://repo.papermc.io/repository/maven-public/") // Paper API
+    maven("https://libraries.minecraft.net/") // Brigadier (for BungeeCord)
 }
 
 dependencies {
     api(project(":boilerplate-base"))
     api(project(":boilerplate-adventure"))
-    compileOnly(libs.paper.v1.v16.v5)
+    compileOnly(libs.bungeecord)
     compileOnly(libs.adventure.serializer.bungeecord)
-    compileOnly(libs.adventure.platform.bukkit)
+    compileOnly(libs.adventure.platform.bungeecord)
     compileOnly(libs.kotlinx.coroutines)
-    compileOnly(libs.mccoroutine.folia)
+    compileOnly(libs.mccoroutine.bungeecord)
+    compileOnly(libs.bytebuddy)
 }
