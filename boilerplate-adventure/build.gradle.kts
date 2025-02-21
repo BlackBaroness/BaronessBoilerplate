@@ -20,5 +20,5 @@ dependencies {
     compileOnly(libs.adventure.minimessage)
     compileOnly(libs.durationserializer)
     compileOnly(libs.kotlinx.serialization.json)
-    compileOnly(libs.placeholerapi)
+    compileOnly(libs.placeholderapi)
 }
