@@ -7,9 +7,13 @@ import io.github.blackbaroness.boilerplate.base.format
 import io.github.blackbaroness.boilerplate.base.truncate
 import io.github.blackbaroness.durationserializer.DurationFormats
 import io.github.blackbaroness.durationserializer.format.DurationFormat
+import me.clip.placeholderapi.PlaceholderAPI
 import net.kyori.adventure.text.ComponentLike
+import net.kyori.adventure.text.minimessage.tag.Tag
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import java.text.DecimalFormat
 import java.time.Duration
 import java.time.format.DateTimeFormatter
@@ -49,3 +53,18 @@ fun Boilerplate.tagResolver(
     value: TemporalAccessor,
     formatter: DateTimeFormatter
 ): TagResolver = tagResolver(name, formatter.format(value))
+
+fun Boilerplate.papiTagResolver(
+    player: Player?,
+    autoClose: Boolean = false
+): TagResolver =
+    TagResolver.resolver("papi") { arguments, _ ->
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null)
+            throw IllegalStateException("The PlaceholderAPI is missing please install it")
+
+        val placeholder = arguments.popOr("PAPI placeholder is missing").value()
+        val resultRaw = PlaceholderAPI.setPlaceholders(player, "%$placeholder%")
+        val resultComponent = resultRaw.parseMiniMessage()
+
+        if (autoClose) Tag.selfClosingInserting(resultComponent) else Tag.inserting(resultComponent)
+    }

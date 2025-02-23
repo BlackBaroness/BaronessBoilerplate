@@ -2,10 +2,12 @@ package io.github.blackbaroness.boilerplate.configurate
 
 import io.github.blackbaroness.boilerplate.adventure.parseMiniMessage
 import io.github.blackbaroness.boilerplate.adventure.replace
+import io.github.blackbaroness.boilerplate.configurate.type.LocationRetriever
 import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
+import org.bukkit.Location
 import org.spongepowered.configurate.kotlin.extensions.get
 import org.spongepowered.configurate.kotlin.extensions.set
 import org.spongepowered.configurate.loader.ConfigurationLoader
@@ -34,6 +36,17 @@ val ComponentLike.asMiniMessageComponent: MiniMessageComponent
             asComponent()
         )
     }
+
+fun Location.toLocationRetriever(): LocationRetriever {
+    return LocationRetriever(
+        this.world!!.name,
+        this.x,
+        this.y,
+        this.z,
+        this.yaw.takeIf { it != 0f },
+        this.pitch.takeIf { it != 0f }
+    )
+}
 
 fun Iterable<MiniMessageComponent>.resolve(vararg tagResolver: TagResolver): List<MiniMessageComponent> {
     return map { it.resolve(*tagResolver) }

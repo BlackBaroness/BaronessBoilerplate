@@ -51,6 +51,7 @@ postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
 bungeecord = { module = "net.md-5:bungeecord-api", version = "1.20-R0.2" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.1" }
+placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
