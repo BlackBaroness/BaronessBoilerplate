@@ -5,7 +5,6 @@ import io.github.blackbaroness.boilerplate.adventure.asLegacy
 import io.github.blackbaroness.boilerplate.base.Boilerplate
 import io.github.blackbaroness.boilerplate.base.copyAndClose
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
@@ -114,21 +113,14 @@ fun Plugin.saveResource(internalPath: String, destination: Path, overwrite: Bool
 }
 
 /**
- * {@code attended=false} makes your block run concurrently on {@code Dispatchers.Default}.
- * You cannot change the results of that event in this mode since it's already finished.
- * Your code might be called concurrently from many threads, so you must care about thread-safety if you use that.
+ * Any suspending function call will make the event pass.
+ * So, if you need to modify the event result, you must use runBlocking or avoid calling suspending functions.
  */
 inline fun <reified T : Event> Plugin.eventListener(
-    attended: Boolean,
     priority: EventPriority = EventPriority.NORMAL,
     crossinline dispatcher: (T) -> CoroutineContext = { findDispatcherForEvent(this, it) },
     crossinline block: suspend (T) -> Unit,
 ): Listener = generateEventListener<T>(priority = priority, plugin = this) { event ->
-    if (!attended) {
-        launch(Dispatchers.Default) { block.invoke(event) }
-        return@generateEventListener
-    }
-
     launch(dispatcher.invoke(event), CoroutineStart.UNDISPATCHED) {
         block.invoke(event)
     }
