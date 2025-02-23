@@ -44,10 +44,10 @@ mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia
 # Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
-hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.8.Final" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.9.Final" }
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.2" }
-postgresql = { module = "org.postgresql:postgresql", version = "42.7.1" }
+postgresql = { module = "org.postgresql:postgresql", version = "42.7.5" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
 bungeecord = { module = "net.md-5:bungeecord-api", version = "1.20-R0.2" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.1" }
