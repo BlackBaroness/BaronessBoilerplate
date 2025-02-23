@@ -19,6 +19,6 @@ class DurationSerializer : TypeSerializer<Duration> {
             return
         }
 
-        node.set(DurationSerializer.serialize(obj, DurationFormats.mediumLengthEnglish()))
+        node.set(DurationSerializer.serialize(obj, DurationFormats.mediumLengthRussian()))
     }
 }
