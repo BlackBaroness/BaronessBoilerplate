@@ -11,7 +11,9 @@ import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer
 import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
+import org.bukkit.attribute.Attribute
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -104,6 +106,22 @@ fun Plugin.saveResource(internalPath: String, destination: Path, overwrite: Bool
     getResource(internalPath)?.use { resource ->
         destination.outputStream().use { out -> resource.copyTo(out) }
     } ?: throw IllegalArgumentException("Could not find resource '$internalPath'")
+}
+
+fun Chunk.getMobCount(entityType: EntityType): Int =
+    entities.count { it is LivingEntity && it.type == entityType }
+
+fun Chunk.getBlockCount(blockType: Material): Int =
+    tileEntities.count { it.type == blockType }
+
+fun LivingEntity.heal(amount: Double = Double.MAX_VALUE) {
+    getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value?.let { maxHealth ->
+        health = amount.coerceAtMost(maxHealth)
+    }
+}
+
+fun Player.feed(amount: Int = Int.MAX_VALUE) {
+    foodLevel = amount.coerceIn(0, 20)
 }
 
 inline fun <reified T : Event> Plugin.eventListener(
