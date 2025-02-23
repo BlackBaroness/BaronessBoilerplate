@@ -37,6 +37,11 @@ val TextColor.asJwtColor: Color
 val Color.asTextColor: TextColor
     get() = TextColor.color(red, green, blue)
 
+fun Audience.sendMessage(message: ComponentLike) {
+    if (message.asLegacy.isBlank()) return
+    sendMessage(message)
+}
+
 fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver) {
     if (unparsed.isBlank()) return
     sendMessage(unparsed.parseMiniMessage(*tagResolvers))
