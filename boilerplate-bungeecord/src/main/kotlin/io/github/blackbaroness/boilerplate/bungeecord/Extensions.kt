@@ -57,6 +57,11 @@ val ServerConnectRequestBuilder_sendFeedback_setter: MethodHandle? by lazy {
     }
 }
 
+/**
+ * {@code attended=false} makes your block run concurrently on {@code Dispatchers.Default}.
+ * You cannot change the results of that event in this mode since it's already finished.
+ * Your code might be called concurrently from many threads, so you must care about thread-safety if you use that.
+ */
 inline fun <reified T : Event> Plugin.eventListener(
     attended: Boolean,
     priority: Byte = EventPriority.NORMAL,

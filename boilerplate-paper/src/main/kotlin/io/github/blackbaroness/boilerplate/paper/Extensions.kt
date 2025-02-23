@@ -1,9 +1,11 @@
 package io.github.blackbaroness.boilerplate.paper
 
-import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.*
 import io.github.blackbaroness.boilerplate.adventure.asLegacy
 import io.github.blackbaroness.boilerplate.base.Boilerplate
-import kotlinx.coroutines.runBlocking
+import io.github.blackbaroness.boilerplate.base.copyAndClose
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
@@ -18,10 +20,15 @@ import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
+import org.bukkit.event.block.BlockEvent
+import org.bukkit.event.entity.EntityEvent
+import org.bukkit.event.vehicle.VehicleEvent
+import org.bukkit.event.world.ChunkEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import java.nio.file.Path
+import kotlin.coroutines.CoroutineContext
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.exists
@@ -101,22 +108,28 @@ fun Plugin.saveResource(internalPath: String, destination: Path, overwrite: Bool
     destination.deleteIfExists()
     destination.createParentDirectories()
 
-    getResource(internalPath)?.use { resource ->
-        destination.outputStream().use { out -> resource.copyTo(out) }
-    } ?: throw IllegalArgumentException("Could not find resource '$internalPath'")
+    (getResource(internalPath) ?: throw IllegalArgumentException("Could not find resource '$internalPath'")).use {
+        copyAndClose(it, destination.outputStream())
+    }
 }
 
+/**
+ * {@code attended=false} makes your block run concurrently on {@code Dispatchers.Default}.
+ * You cannot change the results of that event in this mode since it's already finished.
+ * Your code might be called concurrently from many threads, so you must care about thread-safety if you use that.
+ */
 inline fun <reified T : Event> Plugin.eventListener(
     attended: Boolean,
     priority: EventPriority = EventPriority.NORMAL,
+    crossinline dispatcher: (T) -> CoroutineContext = { findDispatcherForEvent(this, it) },
     crossinline block: suspend (T) -> Unit,
 ): Listener = generateEventListener<T>(priority = priority, plugin = this) { event ->
     if (!attended) {
-        launch { block.invoke(event) }
+        launch(Dispatchers.Default) { block.invoke(event) }
         return@generateEventListener
     }
 
-    runBlocking {
+    launch(dispatcher.invoke(event), CoroutineStart.UNDISPATCHED) {
         block.invoke(event)
     }
 }
@@ -139,3 +152,25 @@ inline fun <reified T : Event> generateEventListener(
 
 val bukkitAudiencesSafe: BukkitAudiences
     get() = bukkitAudiences as? BukkitAudiences ?: throw IllegalStateException("Adventure is not initialized")
+
+fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineContext {
+    if (!plugin.mcCoroutineConfiguration.isFoliaLoaded) {
+        // A path for non-folia is much easier.
+        // "plugin.globalRegionDispatcher" is the main thread on non-folia.
+        return if (event.isAsynchronous) plugin.asyncDispatcher else plugin.globalRegionDispatcher
+    }
+
+    // There are no async events in folia.
+    if (event.isAsynchronous) {
+        return plugin.globalRegionDispatcher
+    }
+
+    // Since each event can be executed on its specific thread, we have no choice other than trying to find it.
+    return when (event) {
+        is EntityEvent -> plugin.entityDispatcher(event.entity)
+        is VehicleEvent -> plugin.entityDispatcher(event.vehicle)
+        is BlockEvent -> plugin.regionDispatcher(event.block.location)
+        is ChunkEvent -> plugin.regionDispatcher(event.world, event.chunk.x, event.chunk.z)
+        else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
+    }
+}
