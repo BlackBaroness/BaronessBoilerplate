@@ -38,37 +38,37 @@ val Color.asTextColor: TextColor
     get() = TextColor.color(red, green, blue)
 
 fun Audience.sendMessage(message: ComponentLike) {
-    if (message.asLegacy.isBlank()) return
+    if (message == Component.empty()) return
     sendMessage(message)
 }
 
 fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendMessage(unparsed.parseMiniMessage(*tagResolvers))
 }
 
 fun Audience.sendMessage(unparsed: String, tagResolvers: Iterable<TagResolver>) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendMessage(unparsed, TagResolver.resolver(tagResolvers))
 }
 
 fun Audience.sendMessage(unparsed: String, tagResolvers: Collection<TagResolver>) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendMessage(unparsed, TagResolver.resolver(tagResolvers))
 }
 
 fun Audience.sendActionBar(unparsed: String, vararg tagResolvers: TagResolver) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendActionBar(unparsed.parseMiniMessage(*tagResolvers))
 }
 
 fun Audience.sendActionBar(unparsed: String, tagResolvers: Iterable<TagResolver>) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendActionBar(unparsed, TagResolver.resolver(tagResolvers))
 }
 
 fun Audience.sendActionBar(unparsed: String, tagResolvers: Collection<TagResolver>) {
-    if (unparsed.isBlank()) return
+    if (unparsed.isEmpty()) return
     sendActionBar(unparsed, TagResolver.resolver(tagResolvers))
 }
 
