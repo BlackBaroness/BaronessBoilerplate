@@ -101,12 +101,6 @@ fun Player.feed(amount: Int = Int.MAX_VALUE) {
     foodLevel = amount.coerceIn(0, 20)
 }
 
-fun Chunk.getMobCount(entityType: EntityType): Int =
-    entities.count { it is LivingEntity && it.type == entityType }
-
-fun Chunk.getBlockCount(blockType: Material): Int =
-    tileEntities.count { it.type == blockType }
-
 fun Player.giveOrDrop(items: Collection<ItemStack>, allowOthersPickup: Boolean = false, willAge: Boolean = false) {
     inventory.addItem(*items.toTypedArray()).forEach { (_, item) ->
         location.world.dropItem(location, item) { droppedItem ->
