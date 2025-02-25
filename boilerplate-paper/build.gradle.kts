@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/") // Paper API
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") // PlaceholderAPI
 }
 
 dependencies {
@@ -15,4 +16,6 @@ dependencies {
     compileOnly(libs.adventure.platform.bukkit)
     compileOnly(libs.kotlinx.coroutines)
     compileOnly(libs.mccoroutine.folia)
+    compileOnly(libs.placeholderapi)
+    compileOnly(libs.adventure.minimessage)
 }
