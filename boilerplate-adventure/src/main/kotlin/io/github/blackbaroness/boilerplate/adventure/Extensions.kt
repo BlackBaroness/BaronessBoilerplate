@@ -37,11 +37,6 @@ val TextColor.asJwtColor: Color
 val Color.asTextColor: TextColor
     get() = TextColor.color(red, green, blue)
 
-fun Audience.sendMessage(message: ComponentLike) {
-    if (message == Component.empty()) return
-    sendMessage(message)
-}
-
 fun Audience.sendMessage(unparsed: String, vararg tagResolvers: TagResolver) {
     if (unparsed.isEmpty()) return
     sendMessage(unparsed.parseMiniMessage(*tagResolvers))
@@ -95,3 +90,6 @@ fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>) =
 
 fun String.parseMiniMessage(tagResolvers: Collection<TagResolver>) =
     parseMiniMessage(TagResolver.resolver(tagResolvers))
+
+val ComponentLike.isEmpty
+    get() = this.asComponent() == Component.empty()

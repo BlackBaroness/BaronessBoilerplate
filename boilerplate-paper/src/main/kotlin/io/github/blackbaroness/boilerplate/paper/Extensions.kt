@@ -1,6 +1,7 @@
 package io.github.blackbaroness.boilerplate.paper
 
 import com.github.shynixn.mccoroutine.folia.*
+import io.github.blackbaroness.boilerplate.adventure.ExtendedAudience
 import io.github.blackbaroness.boilerplate.adventure.asLegacy
 import io.github.blackbaroness.boilerplate.base.Boilerplate
 import io.github.blackbaroness.boilerplate.base.copyAndClose
@@ -14,7 +15,6 @@ import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
 import org.bukkit.attribute.Attribute
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -75,7 +75,7 @@ val java.awt.Color.asBukkitColor: Color
     get() = Color.fromRGB(red, green, blue)
 
 val CommandSender.adventure: Audience
-    get() = if (Boilerplate.isNativeAdventureApiAvailable) this else bukkitAudiencesSafe.sender(this)
+    get() = ExtendedAudience(if (Boilerplate.isNativeAdventureApiAvailable) this else bukkitAudiencesSafe.sender(this))
 
 val Collection<CommandSender>.adventure: Audience
     get() = Audience.audience(map { it.adventure })

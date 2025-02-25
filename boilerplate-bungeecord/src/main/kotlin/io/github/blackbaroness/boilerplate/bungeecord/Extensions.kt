@@ -1,6 +1,7 @@
 package io.github.blackbaroness.boilerplate.bungeecord
 
 import com.github.shynixn.mccoroutine.bungeecord.launch
+import io.github.blackbaroness.boilerplate.adventure.ExtendedAudience
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import net.bytebuddy.ByteBuddy
@@ -117,7 +118,7 @@ val bungeeAudiencesSafe: BungeeAudiences
     get() = bungeeAudiences ?: throw IllegalStateException("Adventure is not initialized")
 
 val CommandSender.adventure: Audience
-    get() = bungeeAudiencesSafe.sender(this)
+    get() = ExtendedAudience(bungeeAudiencesSafe.sender(this))
 
 val Collection<CommandSender>.adventure: Audience
     get() = Audience.audience(map { it.adventure })
