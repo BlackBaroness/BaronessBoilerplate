@@ -15,6 +15,7 @@ import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
 import org.bukkit.attribute.Attribute
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -23,6 +24,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockEvent
 import org.bukkit.event.entity.EntityEvent
+import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.vehicle.VehicleEvent
 import org.bukkit.event.world.ChunkEvent
 import org.bukkit.inventory.Inventory
@@ -173,6 +175,7 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
     return when (event) {
         is EntityEvent -> plugin.entityDispatcher(event.entity)
         is VehicleEvent -> plugin.entityDispatcher(event.vehicle)
+        is PlayerEvent -> plugin.entityDispatcher(event.player)
         is BlockEvent -> plugin.regionDispatcher(event.block.location)
         is ChunkEvent -> plugin.regionDispatcher(event.world, event.chunk.x, event.chunk.z)
         else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
