@@ -84,7 +84,7 @@ val Collection<CommandSender>.adventure: Audience
 
 @Suppress("DEPRECATION")
 fun Player.kick(reason: ComponentLike?) {
-    if (Boilerplate.isNativeAdventureApiAvailable) kick(reason) else kickPlayer(reason?.asLegacy)
+    if (Boilerplate.isNativeAdventureApiAvailable) kick(reason?.asComponent()) else kickPlayer(reason?.asLegacy)
 }
 
 fun Inventory.toMap(clone: Boolean = true): Map<Int, ItemStack?> {
