@@ -178,6 +178,7 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
         is PlayerEvent -> plugin.entityDispatcher(event.player)
         is BlockEvent -> plugin.regionDispatcher(event.block.location)
         is ChunkEvent -> plugin.regionDispatcher(event.world, event.chunk.x, event.chunk.z)
+        is MCCoroutineExceptionEvent -> plugin.asyncDispatcher // can be called on different threads, IDK what to do
         else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
     }
 }
