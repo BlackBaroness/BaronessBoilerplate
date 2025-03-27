@@ -15,7 +15,6 @@ import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
 import org.bukkit.attribute.Attribute
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -172,6 +171,11 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
     }
 
     // Since each event can be executed on its specific thread, we have no choice other than trying to find it.
+    for (resolver in Boilerplate.getCustomEventDispatcherResolvers()) {
+        val context = resolver.invoke(event)
+        if (context != null) return context
+    }
+
     return when (event) {
         is EntityEvent -> plugin.entityDispatcher(event.entity)
         is VehicleEvent -> plugin.entityDispatcher(event.vehicle)

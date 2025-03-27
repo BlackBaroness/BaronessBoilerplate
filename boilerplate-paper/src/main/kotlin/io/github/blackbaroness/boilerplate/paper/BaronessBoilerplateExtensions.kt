@@ -13,11 +13,14 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
+import java.util.concurrent.CopyOnWriteArrayList
+import kotlin.coroutines.CoroutineContext
 
 internal var bukkitAudiences: Any? = null
 
@@ -83,4 +86,14 @@ fun Boilerplate.papiTagResolver(player: Player?, selfClosing: Boolean = true) =
     }
 
 private val logger by lazy { JavaPlugin.getProvidingPlugin(Boilerplate::class.java).slF4JLogger }
+
+private val customEventDispatcherResolvers = CopyOnWriteArrayList<(Event) -> CoroutineContext?>()
+
+fun Boilerplate.registerEventDispatcherResolver(resolver: (Event) -> CoroutineContext?) {
+    customEventDispatcherResolvers += resolver
+}
+
+fun Boilerplate.getCustomEventDispatcherResolvers(): Collection<(Event) -> CoroutineContext?> {
+    return customEventDispatcherResolvers
+}
 
