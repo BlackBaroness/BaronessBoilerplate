@@ -2,6 +2,7 @@ package io.github.blackbaroness.boilerplate.base
 
 import java.io.InputStream
 import java.io.OutputStream
+import java.nio.ByteBuffer
 import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.listDirectoryEntries
@@ -89,3 +90,11 @@ val ipv4AddressRegex by lazy {
 
 val String.isValidIpv4Address: Boolean
     get() = matches(ipv4AddressRegex)
+
+fun ByteBuffer.putUuid(uuid: UUID): ByteBuffer {
+    putLong(uuid.mostSignificantBits)
+    putLong(uuid.leastSignificantBits)
+    return this
+}
+
+fun UUID.toBytes(): ByteArray = ByteBuffer.allocate(Long.SIZE_BYTES * 2).putUuid(this).array()

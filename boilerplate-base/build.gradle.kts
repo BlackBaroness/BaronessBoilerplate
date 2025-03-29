@@ -10,4 +10,5 @@ dependencies {
     compileOnly(libs.guice.assistedinject)
     compileOnly(libs.vectorz)
     compileOnly(libs.kotlinx.serialization.json)
+    compileOnly(libs.rocksdb)
 }

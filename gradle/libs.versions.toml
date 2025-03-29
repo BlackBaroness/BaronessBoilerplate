@@ -53,6 +53,9 @@ vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
 bungeecord = { module = "net.md-5:bungeecord-api", version = "1.21-R0.1" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.4" }
 placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
+rocksdb = { module = "org.rocksdb:rocksdbjni", version = "9.10.0" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0" }
+luckperms = { module = "net.luckperms:api", version = "5.4" }
 
 [plugins]
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

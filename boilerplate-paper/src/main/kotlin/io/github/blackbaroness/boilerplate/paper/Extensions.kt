@@ -30,6 +30,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 import java.nio.file.Path
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.deleteIfExists
@@ -186,3 +187,5 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
         else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
     }
 }
+
+val UUID.isOfflineUuid get() = version() == 3
