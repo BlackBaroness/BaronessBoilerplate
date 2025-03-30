@@ -1,13 +1,13 @@
 package io.github.blackbaroness.boilerplate.paper
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
+@OptIn(ExperimentalSerializationApi::class)
+@JsonIgnoreUnknownKeys
 @Serializable
 data class MojangPlayerProfile @OptIn(ExperimentalUuidApi::class) constructor(
     val id: Uuid,
@@ -15,6 +15,8 @@ data class MojangPlayerProfile @OptIn(ExperimentalUuidApi::class) constructor(
     val properties: List<JsonObject>
 ) {
 
+    @OptIn(ExperimentalSerializationApi::class)
+    @JsonIgnoreUnknownKeys
     @Serializable
     data class Texture(
         val signature: String?,
