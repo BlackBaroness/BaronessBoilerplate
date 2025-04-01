@@ -12,7 +12,7 @@ mccoroutine = "2.21.0"
 
 [libraries]
 # KotlinX
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.1" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.1" }
 # LiteCommands
 litecommands-core = { module = "dev.rollczi:litecommands-core", version.ref = "litecommands" }
@@ -45,13 +45,13 @@ mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia
 # Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.14.1" }
-hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.11.Final" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.12.Final" }
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.3" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.5" }
 vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
-bungeecord = { module = "net.md-5:bungeecord-api", version = "1.21-R0.1" }
-bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.4" }
+bungeecord = { module = "net.md-5:bungeecord-api", version = "1.21-R0.2" }
+bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.5" }
 placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
 rocksdb = { module = "org.rocksdb:rocksdbjni", version = "9.10.0" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0" }
