@@ -18,6 +18,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
+import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.potion.PotionData
@@ -42,6 +43,7 @@ data class ItemTemplate(
     val headTexture: String? = null,
     val storedEnchantments: Map<Enchantment, Int>? = null,
     val attributes: List<AttributeConfiguration>? = null,
+    val leatherArmorColor: Color? = null,
 ) : ItemProvider {
 
     @ConfigSerializable
@@ -125,6 +127,10 @@ data class ItemTemplate(
 
         attributes?.forEach { attribute ->
             meta.addAttributeModifier(attribute.attribute, attribute.modifier)
+        }
+
+        if (leatherArmorColor != null && meta is LeatherArmorMeta) {
+            meta.setColor(leatherArmorColor.asBukkitColor)
         }
 
         item.itemMeta = meta
