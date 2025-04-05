@@ -43,7 +43,7 @@ data class ItemTemplate(
     val headTexture: String? = null,
     val storedEnchantments: Map<Enchantment, Int>? = null,
     val attributes: List<AttributeConfiguration>? = null,
-    val color: Color? = null,
+    val leatherArmorColor: Color? = null,
 ) : ItemProvider {
 
     @ConfigSerializable
@@ -129,8 +129,8 @@ data class ItemTemplate(
             meta.addAttributeModifier(attribute.attribute, attribute.modifier)
         }
 
-        if (color != null && meta is LeatherArmorMeta) {
-            meta.setColor(color.asBukkitColor)
+        if (leatherArmorColor != null && meta is LeatherArmorMeta) {
+            meta.setColor(leatherArmorColor.asBukkitColor)
         }
 
         item.itemMeta = meta
