@@ -11,4 +11,5 @@ dependencies {
     compileOnly(libs.vectorz)
     compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.rocksdb)
+    compileOnly(libs.zstd)
 }

@@ -14,6 +14,7 @@ dependencies {
     compileOnly(libs.adventure.serializer.bungeecord)
     compileOnly(libs.adventure.platform.bungeecord)
     compileOnly(libs.kotlinx.coroutines)
+    compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.mccoroutine.bungeecord)
     compileOnly(libs.bytebuddy)
 }
