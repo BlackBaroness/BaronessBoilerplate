@@ -24,6 +24,7 @@ class SessionFactoryBuilder(
     var classLoader: ClassLoader? = null,
     var converters: Collection<AttributeConverter<*, *>> = listOf(),
     var hikariProperies: Map<String, Any>? = null,
+    var customProperies: Map<String, Any>? = null,
 ) {
 
     fun build(): SessionFactory {
@@ -31,6 +32,8 @@ class SessionFactoryBuilder(
             BootstrapServiceRegistryBuilder()
                 .applyClassLoader(classLoader ?: annotatedClasses.first()::class.java.classLoader).build()
         )
+
+        configuration.setProperty(Environment.KEYWORD_AUTO_QUOTING_ENABLED, "true")
 
         user?.also { configuration.setProperty(Environment.JAKARTA_JDBC_USER, it) }
         password?.also { configuration.setProperty(Environment.JAKARTA_JDBC_PASSWORD, it) }
@@ -41,6 +44,10 @@ class SessionFactoryBuilder(
 
         hikariProperies?.forEach { (key, value) ->
             configuration.setProperty("${HikariConfigurationUtil.CONFIG_PREFIX}$key", value.toString())
+        }
+
+        customProperies?.forEach { (key, value) ->
+            configuration.setProperty(key, value.toString())
         }
 
         enableSqlLogging?.also {

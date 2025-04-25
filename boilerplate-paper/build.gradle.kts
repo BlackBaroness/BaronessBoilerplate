@@ -1,6 +1,7 @@
 plugins {
     `kotlin-conventions`
     `publish-conventions`
+    kotlin("plugin.serialization") version "2.1.20"
 }
 
 repositories {
@@ -15,7 +16,11 @@ dependencies {
     compileOnly(libs.adventure.serializer.bungeecord)
     compileOnly(libs.adventure.platform.bukkit)
     compileOnly(libs.kotlinx.coroutines)
+    compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.mccoroutine.folia)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.caffeine)
+    compileOnly(libs.guice.core)
+    compileOnly(libs.luckperms)
 }

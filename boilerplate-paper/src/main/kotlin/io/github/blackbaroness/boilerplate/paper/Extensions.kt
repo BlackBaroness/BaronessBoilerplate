@@ -3,9 +3,10 @@ package io.github.blackbaroness.boilerplate.paper
 import com.github.shynixn.mccoroutine.folia.*
 import io.github.blackbaroness.boilerplate.adventure.ExtendedAudience
 import io.github.blackbaroness.boilerplate.adventure.asLegacy
-import io.github.blackbaroness.boilerplate.base.Boilerplate
-import io.github.blackbaroness.boilerplate.base.copyAndClose
+import io.github.blackbaroness.boilerplate.base.*
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
+import kotlinx.serialization.json.Json
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
@@ -15,7 +16,6 @@ import net.md_5.bungee.api.chat.BaseComponent
 import org.bukkit.*
 import org.bukkit.attribute.Attribute
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -27,11 +27,13 @@ import org.bukkit.event.entity.EntityEvent
 import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.vehicle.VehicleEvent
 import org.bukkit.event.world.ChunkEvent
-import org.bukkit.event.world.WorldEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
+import java.io.ByteArrayOutputStream
+import java.io.DataOutputStream
 import java.nio.file.Path
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.deleteIfExists
@@ -173,13 +175,83 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
     }
 
     // Since each event can be executed on its specific thread, we have no choice other than trying to find it.
+    for (resolver in Boilerplate.getCustomEventDispatcherResolvers()) {
+        val context = resolver.invoke(event)
+        if (context != null) return context
+    }
+
     return when (event) {
         is EntityEvent -> plugin.entityDispatcher(event.entity)
         is VehicleEvent -> plugin.entityDispatcher(event.vehicle)
         is PlayerEvent -> plugin.entityDispatcher(event.player)
         is BlockEvent -> plugin.regionDispatcher(event.block.location)
         is ChunkEvent -> plugin.regionDispatcher(event.world, event.chunk.x, event.chunk.z)
-        is WorldEvent -> plugin.globalRegionDispatcher
+        is MCCoroutineExceptionEvent -> plugin.asyncDispatcher // can be called on different threads, IDK what to do
         else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
     }
+}
+
+val UUID.isOfflineUuid get() = version() == 3
+
+inline fun <reified MESSAGE> Plugin.sendBungeeCordMessage(
+    player: Player,
+    channel: String,
+    message: MESSAGE,
+    targetServer: String = "ALL",
+    serializer: Json = Json
+) {
+    if (!server.messenger.isOutgoingChannelRegistered(this, channel)) {
+        server.messenger.registerOutgoingPluginChannel(this, channel)
+    }
+
+    // serialize the message
+    var messageSerialized = serializer.encodeToString(message).encodeToByteArray()
+    var messageCompressed = false
+
+    // try to compress the message
+    messageSerialized.compressZstd()?.also {
+        messageCompressed = true
+        messageSerialized = it
+    }
+
+    val payload = PluginMessagePayload(
+        className = MESSAGE::class.qualifiedName!!,
+        isMessageCompressed = messageCompressed,
+        message = messageSerialized,
+    )
+
+    val payloadEncoded = payload.toByteArray()
+    require(payloadEncoded.size <= Short.MAX_VALUE) { "Payload is too large" }
+
+    val packet = ByteArrayOutputStream().use { outer ->
+        DataOutputStream(outer).use { out ->
+            out.writeUTF("Forward")
+            out.writeUTF(targetServer)
+            out.writeUTF(channel)
+            out.writeShort(payloadEncoded.size)
+            out.write(payloadEncoded)
+        }
+        outer.toByteArray()
+    }
+
+    player.sendPluginMessage(this, "BungeeCord", packet)
+}
+
+inline fun <reified MESSAGE> Plugin.listenBungeeCordMessages(
+    channel: String,
+    crossinline onReceive: suspend (Player, MESSAGE) -> Unit,
+    deserializer: Json = Json
+) = server.messenger.registerIncomingPluginChannel(this, channel) { _, player, content ->
+    val payload = content.toPluginMessagePayload()
+    if (payload.className != MESSAGE::class.qualifiedName)
+        return@registerIncomingPluginChannel
+
+    val messageString = if (payload.isMessageCompressed) {
+        payload.message.decompressZstd().decodeToString()
+    } else {
+        payload.message.decodeToString()
+    }
+
+    val message = deserializer.decodeFromString<MESSAGE>(messageString)
+    launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) { onReceive(player, message) }
 }

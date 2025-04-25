@@ -1,7 +1,9 @@
 package io.github.blackbaroness.boilerplate.base
 
+import com.github.luben.zstd.Zstd
 import java.io.InputStream
 import java.io.OutputStream
+import java.nio.ByteBuffer
 import java.nio.file.Path
 import java.util.*
 import kotlin.io.path.listDirectoryEntries
@@ -89,3 +91,47 @@ val ipv4AddressRegex by lazy {
 
 val String.isValidIpv4Address: Boolean
     get() = matches(ipv4AddressRegex)
+
+fun ByteBuffer.putUuid(uuid: UUID): ByteBuffer {
+    putLong(uuid.mostSignificantBits)
+    putLong(uuid.leastSignificantBits)
+    return this
+}
+
+fun UUID.toBytes(): ByteArray = ByteBuffer.allocate(Long.SIZE_BYTES * 2).putUuid(this).array()
+
+fun ByteArray.compressZstd(level: Int = 1, minimumLength: Int = 1500): ByteArray? {
+    if (minimumLength > this.size) {
+        // the input is too small, no need to compress
+        return null
+    }
+
+    val compressed = Zstd.compress(this, level)
+    if (compressed.size > this.size) {
+        // compression made the array bigger
+        return null
+    }
+
+    // we need to store the original size as 4 extra bytes to decompress later
+    val packed = ByteBuffer.allocate(Int.SIZE_BYTES + compressed.size)
+        .putInt(this.size)
+        .put(compressed)
+        .array()
+
+    if (packed.size > this.size) {
+        // that extra header made our array bigger than the original one
+        return null
+    }
+
+    return packed
+}
+
+fun ByteArray.decompressZstd(): ByteArray {
+    require(this.size >= Int.SIZE_BYTES) { "Invalid compressed format: too short" }
+
+    val buffer = ByteBuffer.wrap(this)
+    val length = buffer.int
+    val packed = ByteArray(buffer.remaining())
+    buffer.get(packed)
+    return Zstd.decompress(packed, length)
+}
