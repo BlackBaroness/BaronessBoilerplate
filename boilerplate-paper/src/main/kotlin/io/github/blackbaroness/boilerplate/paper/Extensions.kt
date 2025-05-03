@@ -195,9 +195,9 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
             val player = when (event) {
                 is InventoryOpenEvent -> event.player
                 is InventoryCloseEvent -> event.player
-                else -> null
+                else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
             }
-            player?.let { plugin.entityDispatcher(it) } ?: plugin.globalRegionDispatcher
+            player.let { plugin.entityDispatcher(it) }
         }
 
         is MCCoroutineExceptionEvent -> plugin.asyncDispatcher // can be called on different threads, IDK what to do
