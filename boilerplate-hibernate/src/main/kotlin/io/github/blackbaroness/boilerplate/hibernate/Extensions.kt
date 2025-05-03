@@ -49,11 +49,31 @@ fun SessionFactoryBuilder.postgresql(config: PostgresConfiguration) {
     driver = org.postgresql.Driver::class
 }
 
-fun SessionFactoryBuilder.h2(directory: Path, name: String) {
+fun SessionFactoryBuilder.h2(
+    directory: Path,
+    name: String,
+    ignoreCase: Boolean? = null,
+    caseInsensitiveIdentifiers: Boolean? = null
+) {
     user = "sa"
     password = ""
-    url = "jdbc:h2:${directory.absolutePathString()}${File.separator}$name"
     driver = org.h2.Driver::class
+    url = buildString {
+        append("jdbc:h2:")
+        append(directory.absolutePathString())
+        append(File.separator)
+        append(name)
+
+        if (ignoreCase != null) {
+            append(";IGNORECASE=")
+            append(ignoreCase.toString().uppercase())
+        }
+
+        if (caseInsensitiveIdentifiers != null) {
+            append(";CASE_INSENSITIVE_IDENTIFIERS=")
+            append(caseInsensitiveIdentifiers.toString().uppercase())
+        }
+    }
 }
 
 // A copy of SessionFactory#inTransaction, but with an inline action
