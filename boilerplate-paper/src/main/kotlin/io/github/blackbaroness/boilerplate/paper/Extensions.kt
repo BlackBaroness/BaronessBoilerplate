@@ -24,6 +24,10 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockEvent
 import org.bukkit.event.entity.EntityEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryEvent
+import org.bukkit.event.inventory.InventoryInteractEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.PlayerEvent
 import org.bukkit.event.vehicle.VehicleEvent
 import org.bukkit.event.world.ChunkEvent
@@ -188,6 +192,18 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
         is BlockEvent -> plugin.regionDispatcher(event.block.location)
         is ChunkEvent -> plugin.regionDispatcher(event.world, event.chunk.x, event.chunk.z)
         is WorldEvent -> plugin.globalRegionDispatcher
+        is InventoryInteractEvent -> plugin.entityDispatcher(event.whoClicked)
+
+        is InventoryEvent -> {
+            val player = when (event) {
+                is InventoryOpenEvent -> event.player
+                is InventoryCloseEvent -> event.player
+                else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
+            }
+
+            player.let { plugin.entityDispatcher(it) }
+        }
+
         is MCCoroutineExceptionEvent -> plugin.asyncDispatcher // can be called on different threads, IDK what to do
         else -> throw IllegalStateException("Cannot find dispatcher for ${event::class.simpleName}, override it manually")
     }
