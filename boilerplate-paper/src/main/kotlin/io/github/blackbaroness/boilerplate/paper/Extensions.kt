@@ -202,8 +202,8 @@ inline fun <reified MESSAGE> Plugin.sendBungeeCordMessage(
     targetServer: String = "ALL",
     serializer: Json = Json
 ) {
-    if (!server.messenger.isOutgoingChannelRegistered(this, channel)) {
-        server.messenger.registerOutgoingPluginChannel(this, channel)
+    if (!server.messenger.isOutgoingChannelRegistered(this, "BungeeCord")) {
+        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
     }
 
     // serialize the message
