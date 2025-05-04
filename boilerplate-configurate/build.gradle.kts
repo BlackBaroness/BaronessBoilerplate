@@ -1,7 +1,6 @@
 plugins {
     `kotlin-conventions`
     `publish-conventions`
-    alias(libs.plugins.kotlin.serialization)
 }
 
 repositories {
