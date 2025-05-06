@@ -29,14 +29,12 @@ fun Iterable<String>.bulkReplace(what: String, with: String): List<String> {
     return this.map { it.replace(what, with) }
 }
 
-fun Iterable<String>.insertReplacing(what: String, with: Iterable<String>): List<String> {
-    return buildList {
-        addAll(this@insertReplacing)
-
-        val insertIndex = this.indexOfFirst { it.contains(what) }
-        if (insertIndex != -1) {
-            removeAt(insertIndex)
-            with.forEachIndexed { index, component -> add(insertIndex + index, component) }
+fun Iterable<String>.insertReplacing(what: String, with: Iterable<String>): List<String> = buildList {
+    for (originalString in this@insertReplacing) {
+        if (what in originalString) {
+            addAll(with)
+        } else {
+            add(originalString)
         }
     }
 }
