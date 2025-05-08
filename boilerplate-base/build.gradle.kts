@@ -1,7 +1,6 @@
 plugins {
     `kotlin-conventions`
     `publish-conventions`
-    kotlin("plugin.serialization") version "2.1.20"
 }
 
 dependencies {
@@ -12,4 +11,5 @@ dependencies {
     compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.rocksdb)
     compileOnly(libs.zstd)
+    compileOnly(libs.joml)
 }
