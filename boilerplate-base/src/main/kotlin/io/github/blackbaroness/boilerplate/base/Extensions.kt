@@ -4,8 +4,12 @@ import com.github.luben.zstd.Zstd
 import java.io.InputStream
 import java.io.OutputStream
 import java.nio.ByteBuffer
+import java.nio.channels.Channels
+import java.nio.channels.FileChannel
 import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.util.*
+import kotlin.io.path.inputStream
 import kotlin.io.path.listDirectoryEntries
 
 inline fun <reified T> isClassPresent() =
@@ -132,4 +136,36 @@ fun ByteArray.decompressZstd(): ByteArray {
     val packed = ByteArray(buffer.remaining())
     buffer.get(packed)
     return Zstd.decompress(packed, length)
+}
+
+inline fun Path.useChunks(chunkSize: Int, action: (ByteBuffer) -> Unit) {
+    require(chunkSize >= 1)
+
+    // If the chunk size is small (less than 1 MB), we better use a buffered stream to avoid too many I/O calls
+    val input = if (chunkSize < DEFAULT_BUFFER_SIZE * 128) {
+        Channels.newChannel(inputStream().buffered())
+    } else {
+        FileChannel.open(this, StandardOpenOption.READ)
+    }
+
+    input.use { channel ->
+        val buffer = ByteBuffer.allocate(chunkSize)
+
+        while (channel.read(buffer) != -1) {
+            buffer.flip()
+
+            val currentChunkSize = buffer.remaining()
+            val chunk = if (currentChunkSize == buffer.capacity()) {
+                buffer
+            } else {
+                val partialBuffer = ByteBuffer.allocate(currentChunkSize)
+                partialBuffer.put(buffer)
+                partialBuffer.flip()
+                partialBuffer
+            }
+
+            action(chunk)
+            buffer.clear()
+        }
+    }
 }
