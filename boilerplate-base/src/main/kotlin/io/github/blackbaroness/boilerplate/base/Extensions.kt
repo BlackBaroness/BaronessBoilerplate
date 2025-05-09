@@ -139,32 +139,20 @@ fun ByteArray.decompressZstd(): ByteArray {
 }
 
 inline fun Path.useChunks(chunkSize: Int, action: (ByteBuffer) -> Unit) {
-    require(chunkSize >= 1)
+    require(chunkSize >= 1) { "chunkSize must be >= 1" }
 
-    // If the chunk size is small (less than 1 MB), we better use a buffered stream to avoid too many I/O calls
-    val input = if (chunkSize < DEFAULT_BUFFER_SIZE * 128) {
-        Channels.newChannel(inputStream().buffered())
-    } else {
+    // Don't use a buffer when the chunk size is big enough
+    val channel = if (chunkSize >= DEFAULT_BUFFER_SIZE) {
         FileChannel.open(this, StandardOpenOption.READ)
+    } else {
+        Channels.newChannel(inputStream().buffered())
     }
 
-    input.use { channel ->
+    channel.use {
         val buffer = ByteBuffer.allocate(chunkSize)
-
-        while (channel.read(buffer) != -1) {
+        while (it.read(buffer) != -1) {
             buffer.flip()
-
-            val currentChunkSize = buffer.remaining()
-            val chunk = if (currentChunkSize == buffer.capacity()) {
-                buffer
-            } else {
-                val partialBuffer = ByteBuffer.allocate(currentChunkSize)
-                partialBuffer.put(buffer)
-                partialBuffer.flip()
-                partialBuffer
-            }
-
-            action(chunk)
+            action(buffer.asReadOnlyBuffer())
             buffer.clear()
         }
     }
