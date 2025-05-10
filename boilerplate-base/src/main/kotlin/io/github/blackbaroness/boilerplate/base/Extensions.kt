@@ -11,6 +11,7 @@ import java.nio.file.StandardOpenOption
 import java.util.*
 import kotlin.io.path.inputStream
 import kotlin.io.path.listDirectoryEntries
+import kotlin.random.Random
 
 inline fun <reified T> isClassPresent() =
     runCatching { Class.forName(T::class.qualifiedName) }.isSuccess
@@ -136,6 +137,18 @@ fun ByteArray.decompressZstd(): ByteArray {
     val packed = ByteArray(buffer.remaining())
     buffer.get(packed)
     return Zstd.decompress(packed, length)
+}
+
+fun ipToLong(ip: String): Long =
+    ip.split(".").fold(0L) { acc, octet ->
+        (acc shl 8) or octet.toLong()
+    }
+
+inline fun repeat(range: IntRange, action: (Int) -> Unit) {
+    require(!range.isEmpty()) { "Invalid range: Range must not be empty or reversed." }
+
+    val times = range.random()
+    repeat(times, action)
 }
 
 inline fun Path.useChunks(chunkSize: Int, action: (ByteBuffer) -> Unit) {
