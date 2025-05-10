@@ -138,6 +138,11 @@ fun ByteArray.decompressZstd(): ByteArray {
     return Zstd.decompress(packed, length)
 }
 
+inline fun repeat(range: IntRange, action: (Int) -> Unit) {
+    val times = range.random()
+    repeat(times, action)
+}
+
 inline fun Path.useChunks(chunkSize: Int, action: (ByteBuffer) -> Unit) {
     require(chunkSize >= 1) { "chunkSize must be >= 1" }
 
