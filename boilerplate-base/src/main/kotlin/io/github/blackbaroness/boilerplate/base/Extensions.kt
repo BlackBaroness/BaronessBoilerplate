@@ -139,11 +139,6 @@ fun ByteArray.decompressZstd(): ByteArray {
     return Zstd.decompress(packed, length)
 }
 
-fun ipToLong(ip: String): Long =
-    ip.split(".").fold(0L) { acc, octet ->
-        (acc shl 8) or octet.toLong()
-    }
-
 inline fun repeat(range: IntRange, action: (Int) -> Unit) {
     val times = range.random()
     repeat(times, action)
