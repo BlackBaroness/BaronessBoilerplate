@@ -145,8 +145,6 @@ fun ipToLong(ip: String): Long =
     }
 
 inline fun repeat(range: IntRange, action: (Int) -> Unit) {
-    require(!range.isEmpty()) { "Invalid range: Range must not be empty or reversed." }
-
     val times = range.random()
     repeat(times, action)
 }
