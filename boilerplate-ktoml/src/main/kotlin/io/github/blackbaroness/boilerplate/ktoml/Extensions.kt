@@ -49,10 +49,24 @@ fun Iterable<MiniMessageComponent>.replace(what: String, with: ComponentLike): L
     return map { it.replace(what, with).asMiniMessageComponent }
 }
 
-inline fun <reified T> loadTomlFile(path: Path, toml: Toml): T? {
-    if (!Files.exists(path)) return null
-    val content = Files.readString(path)
-    return toml.decodeFromString(serializer(), content)
+inline fun <reified T> loadOrSaveDefault(path: Path, toml: Toml, defaultValue: T): T {
+    if (!Files.exists(path)) {
+        saveTomlFile(path, defaultValue, toml)
+        return defaultValue
+    }
+
+    val content = Files.readString(path).trim()
+    if (content.isBlank()) {
+        saveTomlFile(path, defaultValue, toml)
+        return defaultValue
+    }
+
+    return try {
+        toml.decodeFromString(serializer(), content)
+    } catch (_: Exception) {
+        saveTomlFile(path, defaultValue, toml)
+        defaultValue
+    }
 }
 
 inline fun <reified T> saveTomlFile(path: Path, value: T, toml: Toml) {
