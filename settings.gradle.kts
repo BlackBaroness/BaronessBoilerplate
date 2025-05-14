@@ -12,5 +12,6 @@ include(
     "boilerplate-invui",
     "boilerplate-litecommands",
     "boilerplate-paper",
-    "boilerplate-bungeecord"
+    "boilerplate-bungeecord",
+    "boilerplate-ktoml",
 )
