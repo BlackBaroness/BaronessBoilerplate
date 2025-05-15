@@ -37,7 +37,8 @@ class NbtItemSerializer : KSerializer<NbtItem> {
         }
 
         // Validate the NBT string by checking if it's a valid NBT format
-        NBT.itemStackFromNBT(NBT.parseNBT(nbtString)) ?: throw IllegalStateException("Not a valid item NBT: '$nbtString'")
+        NBT.itemStackFromNBT(NBT.parseNBT(nbtString))
+            ?: throw IllegalStateException("Not a valid item NBT: '$nbtString'")
 
         return NbtItem(nbtString)
     }
