@@ -18,6 +18,7 @@ implementation("com.github.BlackBaroness.BaronessBoilerplate:MODULE:VERSION")
 | boilerplate-litecommands | 11      | -      |
 | boilerplate-paper        | 11      | -      |
 | boilerplate-bungeecord   | 11      | -      |
+| boilerplate-ktoml        | 11      | -      |
 
 ### Feel free to make PRs
 

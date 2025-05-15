@@ -1,0 +1,29 @@
+plugins {
+    `kotlin-conventions`
+    `publish-conventions`
+}
+
+repositories {
+    maven("https://repo.papermc.io/repository/maven-public/") // Paper API
+    maven("https://repo.codemc.io/repository/maven-public/") // NBTAPI
+}
+
+dependencies {
+    api(project(":boilerplate-base"))
+    compileOnly(libs.durationserializer)
+    compileOnly(libs.ktoml.core)
+    compileOnly(libs.ktoml.file)
+
+    // Optional:
+    compileOnly(project(":boilerplate-adventure"))
+    compileOnly(libs.adventure.core)
+    compileOnly(libs.adventure.minimessage)
+
+    // Optional:
+    compileOnly(project(":boilerplate-paper"))
+    compileOnly(libs.paper.v1.v16.v5)
+    compileOnly(libs.adventure.core)
+    compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.kotlinx.serialization.json)
+    compileOnly(libs.nbtapi)
+}
