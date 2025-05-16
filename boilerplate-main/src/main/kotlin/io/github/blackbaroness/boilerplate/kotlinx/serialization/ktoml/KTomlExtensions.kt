@@ -1,15 +1,15 @@
 package io.github.blackbaroness.boilerplate.kotlinx.serialization.ktoml
 
 import com.akuleshov7.ktoml.Toml
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.serializer
 import java.nio.file.Path
 import kotlin.io.path.exists
-import kotlin.io.path.useLines
+import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 inline fun <reified T> Toml.read(file: Path): T =
-    file.useLines { decodeFromString(serializersModule.serializer(), it) }
+    decodeFromString(file.readText())
 
 inline fun <reified T> Toml.write(file: Path, value: T) =
     file.writeText(encodeToString(value))
