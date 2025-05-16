@@ -30,7 +30,7 @@ import java.util.*
 
 @Serializable
 data class ItemTemplate(
-    val material: Material,
+    val material: @Contextual Material,
     val amount: Int? = null,
     val displayName: @Contextual MiniMessageComponent? = null,
     val lore: List<@Contextual MiniMessageComponent>? = null,
