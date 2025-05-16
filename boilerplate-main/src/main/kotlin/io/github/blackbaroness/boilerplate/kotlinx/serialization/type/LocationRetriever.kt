@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.type
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -33,4 +33,15 @@ data class LocationRetriever(
     companion object {
         fun fromString(string: String) = Json.decodeFromString<LocationRetriever>(string)
     }
+}
+
+fun Location.toLocationRetriever(): LocationRetriever {
+    return LocationRetriever(
+        this.world!!.name,
+        this.x,
+        this.y,
+        this.z,
+        this.yaw.takeIf { it != 0f },
+        this.pitch.takeIf { it != 0f }
+    )
 }

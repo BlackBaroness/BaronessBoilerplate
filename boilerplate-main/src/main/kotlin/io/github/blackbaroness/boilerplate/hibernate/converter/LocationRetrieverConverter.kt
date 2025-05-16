@@ -1,6 +1,6 @@
 package io.github.blackbaroness.boilerplate.hibernate.converter
 
-import io.github.blackbaroness.boilerplate.configurate.type.LocationRetriever
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.LocationRetriever
 import jakarta.persistence.AttributeConverter
 import kotlinx.serialization.json.Json
 

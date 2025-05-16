@@ -1,4 +1,4 @@
-package io.github.blackbaroness.boilerplate.configurate.type
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
 import de.tr7zw.nbtapi.NBT
 

@@ -25,8 +25,6 @@ dependencies {
     // Serialization
     compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.durationserializer)
-    compileOnly(libs.configurate.core)
-    compileOnly(libs.configurate.extra.kotlin)
 
     // SQL
     compileOnly(platform(libs.hibernate.platform))

@@ -1,11 +1,13 @@
-package io.github.blackbaroness.boilerplate.configurate.serializer
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.serializer.keyed
 
 import io.github.blackbaroness.boilerplate.paper.asMinimalString
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
 import org.bukkit.attribute.Attribute
 
-class AttributeSerializer : KeyedSerializer<Attribute>() {
+object AttributeSerializer : KeyedSerializer<Attribute>() {
+
+    override val clazz = Attribute::class
 
     override fun resolveEntityFromKey(key: NamespacedKey): Attribute {
         return Registry.ATTRIBUTE.get(key)

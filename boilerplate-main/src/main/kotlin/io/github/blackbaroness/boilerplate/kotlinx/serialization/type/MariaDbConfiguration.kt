@@ -1,8 +1,8 @@
-package io.github.blackbaroness.boilerplate.configurate.type
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
-import org.spongepowered.configurate.objectmapping.ConfigSerializable
+import kotlinx.serialization.Serializable
 
-@ConfigSerializable
+@Serializable
 data class MariaDbConfiguration(
     val address: String = "localhost",
     val port: Int = 3306,

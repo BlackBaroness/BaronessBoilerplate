@@ -1,12 +1,13 @@
-package io.github.blackbaroness.boilerplate.configurate.type
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.bossbar.BossBar
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
-import org.spongepowered.configurate.objectmapping.ConfigSerializable
 
-@ConfigSerializable
+@Serializable
 data class BossBarConfiguration(
-    val content: MiniMessageComponent,
+    val content: @Contextual MiniMessageComponent,
     val progress: Float? = null,
     val color: BossBar.Color,
     val overlay: BossBar.Overlay,

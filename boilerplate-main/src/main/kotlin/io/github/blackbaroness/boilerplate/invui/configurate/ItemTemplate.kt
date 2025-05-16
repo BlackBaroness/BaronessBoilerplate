@@ -3,12 +3,14 @@ package io.github.blackbaroness.boilerplate.invui.configurate
 import com.destroystokyo.paper.profile.ProfileProperty
 import com.google.common.collect.Multimap
 import io.github.blackbaroness.boilerplate.base.Boilerplate
-import io.github.blackbaroness.boilerplate.configurate.type.AttributeConfiguration
-import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.AttributeConfiguration
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
 import io.github.blackbaroness.boilerplate.paper.asBukkitColor
 import io.github.blackbaroness.boilerplate.paper.asBungeeCordComponents
 import io.github.blackbaroness.boilerplate.paper.isNativeAdventureApiAvailable
 import io.github.blackbaroness.boilerplate.paper.methodMaterialGetDefaultAttributeModifiers
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -24,35 +26,34 @@ import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.potion.PotionData
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionType
-import org.spongepowered.configurate.objectmapping.ConfigSerializable
 import xyz.xenondevs.invui.item.ItemProvider
 import java.awt.Color
 import java.util.*
 
-@ConfigSerializable
+@Serializable
 data class ItemTemplate(
     val material: Material,
     val amount: Int? = null,
-    val displayName: MiniMessageComponent? = null,
-    val lore: List<MiniMessageComponent>? = null,
+    val displayName: @Contextual MiniMessageComponent? = null,
+    val lore: List<@Contextual MiniMessageComponent>? = null,
     val customModelData: Int? = null,
     val flags: Set<ItemFlag>? = null,
-    val enchantments: Map<Enchantment, Int>? = null,
+    val enchantments: Map<@Contextual Enchantment, Int>? = null,
     val unbreakable: Boolean? = null,
-    val potion: PotionTemplate? = null,
+    val potion: @Contextual PotionTemplate? = null,
     val headTexture: String? = null,
-    val storedEnchantments: Map<Enchantment, Int>? = null,
+    val storedEnchantments: Map<@Contextual Enchantment, Int>? = null,
     val attributes: List<AttributeConfiguration>? = null,
-    val leatherArmorColor: Color? = null,
+    val leatherArmorColor: @Contextual Color? = null,
 ) : ItemProvider {
 
-    @ConfigSerializable
+    @Serializable
     data class PotionTemplate(
         val type: PotionType,
         val extended: Boolean,
         val upgraded: Boolean,
-        val color: Color?,
-        val effects: List<PotionEffect>?
+        val color: @Contextual Color?,
+        val effects: List<@Contextual PotionEffect>?
     )
 
     @Suppress("DEPRECATION")

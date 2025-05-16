@@ -1,18 +1,19 @@
-package io.github.blackbaroness.boilerplate.configurate.type
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import net.kyori.adventure.title.Title
 import net.kyori.adventure.util.Ticks
-import org.spongepowered.configurate.objectmapping.ConfigSerializable
 import java.time.Duration
 
-@ConfigSerializable
+@Serializable
 data class TitleConfiguration(
-    val title: MiniMessageComponent,
-    val subtitle: MiniMessageComponent,
-    val durationFadeIn: Duration = Ticks.duration(10),
-    val durationStay: Duration = Ticks.duration(70),
-    val durationFadeOut: Duration = Ticks.duration(20),
+    val title: @Contextual MiniMessageComponent,
+    val subtitle: @Contextual MiniMessageComponent,
+    val durationFadeIn: @Contextual Duration = Ticks.duration(10),
+    val durationStay: @Contextual Duration = Ticks.duration(70),
+    val durationFadeOut: @Contextual Duration = Ticks.duration(20),
 ) {
 
     fun createTitle(vararg tagResolvers: TagResolver): Title = Title.title(

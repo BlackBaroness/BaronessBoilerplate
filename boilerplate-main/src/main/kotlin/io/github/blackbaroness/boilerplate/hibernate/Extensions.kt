@@ -1,7 +1,7 @@
 package io.github.blackbaroness.boilerplate.hibernate
 
-import io.github.blackbaroness.boilerplate.configurate.type.MariaDbConfiguration
-import io.github.blackbaroness.boilerplate.configurate.type.PostgresConfiguration
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MariaDbConfiguration
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.PostgresConfiguration
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.hibernate.TransactionManagementException

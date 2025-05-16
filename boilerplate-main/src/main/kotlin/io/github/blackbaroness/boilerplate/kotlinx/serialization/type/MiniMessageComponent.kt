@@ -1,25 +1,21 @@
-package io.github.blackbaroness.boilerplate.configurate
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
 import io.github.blackbaroness.boilerplate.adventure.parseMiniMessage
 import io.github.blackbaroness.boilerplate.adventure.replace
-import io.github.blackbaroness.boilerplate.configurate.type.LocationRetriever
-import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
+import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.ComponentLike
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
-import org.bukkit.Location
-import org.spongepowered.configurate.loader.ConfigurationLoader
-import org.spongepowered.configurate.serialize.TypeSerializer
-import org.spongepowered.configurate.serialize.TypeSerializerCollection
 
-inline fun <reified T> TypeSerializerCollection.Builder.register(
-    serializer: TypeSerializer<T>
-): TypeSerializerCollection.Builder = register(T::class.java, serializer)
+class MiniMessageComponent(
+    val originalString: String,
+    parsedComponent: Component
+) : ComponentLike by parsedComponent {
 
-inline fun <reified T : Any> ConfigurationLoader<*>.loadAndSave(): T {
-    val obj = this.load().get(T::class.java)!!
-    this.save(this.createNode().set(T::class.java, obj))
-    return obj
+    fun resolve(vararg tagResolvers: TagResolver): MiniMessageComponent {
+        if (tagResolvers.isEmpty()) return this
+        return originalString.parseMiniMessage(*tagResolvers).asMiniMessageComponent
+    }
 }
 
 val String.asMiniMessageComponent: MiniMessageComponent
@@ -35,17 +31,6 @@ val ComponentLike.asMiniMessageComponent: MiniMessageComponent
         )
     }
 
-fun Location.toLocationRetriever(): LocationRetriever {
-    return LocationRetriever(
-        this.world!!.name,
-        this.x,
-        this.y,
-        this.z,
-        this.yaw.takeIf { it != 0f },
-        this.pitch.takeIf { it != 0f }
-    )
-}
-
 fun Iterable<MiniMessageComponent>.resolve(vararg tagResolver: TagResolver): List<MiniMessageComponent> {
     return map { it.resolve(*tagResolver) }
 }
@@ -57,4 +42,3 @@ fun Iterable<MiniMessageComponent>.replace(what: String, with: String): List<Min
 fun Iterable<MiniMessageComponent>.replace(what: String, with: ComponentLike): List<MiniMessageComponent> {
     return map { it.replace(what, with).asMiniMessageComponent }
 }
-

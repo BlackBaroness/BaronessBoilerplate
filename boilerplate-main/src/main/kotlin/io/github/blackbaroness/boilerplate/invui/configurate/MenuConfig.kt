@@ -2,9 +2,10 @@
 
 package io.github.blackbaroness.boilerplate.invui.configurate
 
-import io.github.blackbaroness.boilerplate.configurate.asMiniMessageComponent
-import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
-import org.spongepowered.configurate.objectmapping.ConfigSerializable
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.asMiniMessageComponent
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import xyz.xenondevs.invui.gui.PagedGui
 import xyz.xenondevs.invui.gui.structure.Markers
 import xyz.xenondevs.invui.item.Item
@@ -15,33 +16,13 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@ConfigSerializable
-open class MenuConfig() {
-
-    var title: MiniMessageComponent = "".asMiniMessageComponent
-    var structure: List<String> = listOf()
-    var customItems: Map<Char, ItemTemplate> = mapOf()
-    var templates: Map<Char, ItemTemplate> = mapOf()
-
-    constructor(
-        title: MiniMessageComponent,
-        structure: List<String>,
-        customItems: Map<Char, ItemTemplate> = mapOf(),
-        templates: Map<Char, ItemTemplate> = mapOf()
-    ) : this() {
-        this.title = title
-        this.structure = structure
-        this.customItems = customItems
-        this.templates = templates
-    }
-
-    fun copy(
-        title: MiniMessageComponent = this.title,
-        structure: List<String> = this.structure,
-        customItems: Map<Char, ItemTemplate> = this.customItems,
-        templates: Map<Char, ItemTemplate> = this.templates
-    ): MenuConfig = MenuConfig(title, structure, customItems, templates)
-}
+@Serializable
+open class MenuConfig(
+    val title: @Contextual MiniMessageComponent = "".asMiniMessageComponent,
+    val structure: List<String> = listOf(),
+    val customItems: Map<Char, ItemTemplate> = mapOf(),
+    val templates: Map<Char, ItemTemplate> = mapOf()
+)
 
 @OptIn(ExperimentalContracts::class)
 inline fun Window.Builder.Normal.Single.import(
