@@ -1,9 +1,8 @@
 @file:Suppress("unused")
 
-package io.github.blackbaroness.boilerplate.invui.configurate
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.asMiniMessageComponent
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.serializer.CharStringSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import xyz.xenondevs.invui.gui.PagedGui
@@ -20,8 +19,8 @@ import kotlin.contracts.contract
 open class MenuConfig(
     val title: @Contextual MiniMessageComponent = "".asMiniMessageComponent,
     val structure: List<String> = listOf(),
-    val customItems: Map<Char, ItemTemplate> = mapOf(),
-    val templates: Map<Char, ItemTemplate> = mapOf()
+    val customItems: Map<@Serializable(CharStringSerializer::class) Char, ItemTemplate> = mapOf(),
+    val templates: Map<@Serializable(CharStringSerializer::class) Char, ItemTemplate> = mapOf()
 )
 
 @OptIn(ExperimentalContracts::class)

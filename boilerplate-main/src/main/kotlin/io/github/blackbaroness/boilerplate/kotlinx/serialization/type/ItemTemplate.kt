@@ -1,10 +1,8 @@
-package io.github.blackbaroness.boilerplate.invui.configurate
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
 import com.destroystokyo.paper.profile.ProfileProperty
 import com.google.common.collect.Multimap
 import io.github.blackbaroness.boilerplate.base.Boilerplate
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.AttributeConfiguration
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
 import io.github.blackbaroness.boilerplate.paper.asBukkitColor
 import io.github.blackbaroness.boilerplate.paper.asBungeeCordComponents
 import io.github.blackbaroness.boilerplate.paper.isNativeAdventureApiAvailable
