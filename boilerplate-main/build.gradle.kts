@@ -28,6 +28,7 @@ dependencies {
     compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.durationserializer)
     compileOnly(libs.ktoml.core)
+    compileOnly(libs.kaml)
 
     // SQL
     compileOnly(platform(libs.hibernate.platform))

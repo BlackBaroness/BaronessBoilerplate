@@ -55,3 +55,4 @@ luckperms = { module = "net.luckperms:api", version = "5.4" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-3" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
 ktoml-core = { module = "com.akuleshov7:ktoml-core", version = "0.7.0" }
+kaml = { module = "com.charleskorn.kaml:kaml", version = "0.78.0" }
