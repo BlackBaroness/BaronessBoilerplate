@@ -5,12 +5,6 @@ plugins {
 rootProject.name = "BaronessBoilerplate"
 
 include(
-    "boilerplate-adventure",
-    "boilerplate-base",
-    "boilerplate-configurate",
-    "boilerplate-hibernate",
-    "boilerplate-invui",
-    "boilerplate-litecommands",
-    "boilerplate-paper",
-    "boilerplate-bungeecord"
+    "boilerplate-main",
+    "boilerplate-all"
 )

@@ -1,10 +1,10 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.1.21"
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
 minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.2.0"
 adventure = "4.21.0"
-adventure-platforms = "4.3.4"
+adventure-platforms = "4.4.0"
 invui = "1.45"
 guice = "7.0.0"
 litecommands = "3.9.7"
@@ -45,7 +45,7 @@ mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia
 # Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.15.0" }
-hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.13.Final" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "6.6.15.Final" }
 h2 = { module = "com.h2database:h2", version = "2.3.232" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.3" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.5" }
@@ -53,11 +53,8 @@ vectorz = { module = "net.mikera:vectorz", version = "0.67.0" }
 bungeecord = { module = "net.md-5:bungeecord-api", version = "1.21-R0.2" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.5" }
 placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
-rocksdb = { module = "org.rocksdb:rocksdbjni", version = "10.0.1" }
+rocksdb = { module = "org.rocksdb:rocksdbjni", version = "10.2.1" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0" }
 luckperms = { module = "net.luckperms:api", version = "5.4" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-3" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
-
-[plugins]
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
