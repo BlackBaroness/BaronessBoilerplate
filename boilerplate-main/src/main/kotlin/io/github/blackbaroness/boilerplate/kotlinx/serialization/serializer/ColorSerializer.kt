@@ -11,7 +11,7 @@ import java.awt.Color
 object ColorIntSerializer : KSerializer<Color> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(Color::class.java.name, PrimitiveKind.INT)
+        PrimitiveSerialDescriptor(Color::class.qualifiedName!!, PrimitiveKind.INT)
 
     override fun serialize(encoder: Encoder, value: Color) {
         encoder.encodeInt(value.rgb)
@@ -24,7 +24,7 @@ object ColorIntSerializer : KSerializer<Color> {
 object ColorHexSerializer : KSerializer<Color> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(Color::class.java.name, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(Color::class.qualifiedName!!, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: Color) {
         encoder.encodeString(

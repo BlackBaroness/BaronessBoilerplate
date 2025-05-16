@@ -12,7 +12,7 @@ import kotlinx.serialization.encoding.Encoder
 object MiniMessageComponentSerializer : KSerializer<MiniMessageComponent> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(MiniMessageComponent::class.java.name, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(MiniMessageComponent::class.qualifiedName!!, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: MiniMessageComponent) =
         encoder.encodeString(value.originalString)

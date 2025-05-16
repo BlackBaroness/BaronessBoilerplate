@@ -14,7 +14,7 @@ import java.time.Duration
 object DurationStringSerializer : KSerializer<Duration> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(Duration::class.java.name, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(Duration::class.qualifiedName!!, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: Duration) {
         encoder.encodeString(DurationSerializer.serialize(value, DurationFormats.mediumLengthRussian()))

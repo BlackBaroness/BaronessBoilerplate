@@ -11,7 +11,7 @@ import net.kyori.adventure.text.format.TextColor
 object TextColorIntSerializer : KSerializer<TextColor> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(TextColor::class.java.name, PrimitiveKind.INT)
+        PrimitiveSerialDescriptor(TextColor::class.qualifiedName!!, PrimitiveKind.INT)
 
     override fun serialize(encoder: Encoder, value: TextColor) {
         encoder.encodeInt(value.value())
@@ -24,7 +24,7 @@ object TextColorIntSerializer : KSerializer<TextColor> {
 object TextColorHexSerializer : KSerializer<TextColor> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(TextColor::class.java.name, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(TextColor::class.qualifiedName!!, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: TextColor) {
         encoder.encodeString(value.asHexString())
