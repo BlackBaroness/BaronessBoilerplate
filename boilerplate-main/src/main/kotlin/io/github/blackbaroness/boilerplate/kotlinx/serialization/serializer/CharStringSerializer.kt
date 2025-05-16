@@ -7,6 +7,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+// Optional, use only when needed
 object CharStringSerializer : KSerializer<Char> {
 
     override val descriptor: SerialDescriptor =

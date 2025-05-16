@@ -1,6 +1,5 @@
 package io.github.blackbaroness.boilerplate.kotlinx.serialization.kaml
 
-import com.akuleshov7.ktoml.Toml
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
