@@ -1,3 +1,5 @@
+@file:Suppress("VulnerableLibrariesLocal")
+
 plugins {
     `kotlin-conventions`
     `publish-conventions`
@@ -25,6 +27,7 @@ dependencies {
     // Serialization
     compileOnly(libs.kotlinx.serialization.json)
     compileOnly(libs.durationserializer)
+    compileOnly(libs.ktoml.core)
 
     // SQL
     compileOnly(platform(libs.hibernate.platform))

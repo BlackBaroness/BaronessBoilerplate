@@ -1,5 +1,4 @@
 [versions]
-kotlin = "2.1.21"
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
 minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.2.0"
@@ -21,9 +20,6 @@ litecommands-bukkit = { module = "dev.rollczi:litecommands-bukkit", version.ref 
 # Guice
 guice-core = { module = "com.google.inject:guice", version.ref = "guice" }
 guice-assistedinject = { module = "com.google.inject.extensions:guice-assistedinject", version.ref = "guice" }
-# Configurate
-configurate-core = { module = "org.spongepowered:configurate-core", version.ref = "configurate" }
-configurate-extra-kotlin = { module = "org.spongepowered:configurate-extra-kotlin", version.ref = "configurate" }
 # Adventure
 adventure-core = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-serializer-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "adventure" }
@@ -58,3 +54,4 @@ caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0
 luckperms = { module = "net.luckperms:api", version = "5.4" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-3" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
+ktoml-core = { module = "com.akuleshov7:ktoml-core", version = "0.7.0" }
