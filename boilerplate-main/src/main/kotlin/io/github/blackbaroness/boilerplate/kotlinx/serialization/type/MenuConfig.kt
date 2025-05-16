@@ -2,6 +2,7 @@
 
 package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
+import com.akuleshov7.ktoml.annotations.TomlMultiline
 import io.github.blackbaroness.boilerplate.kotlinx.serialization.serializer.CharStringSerializer
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
@@ -18,6 +19,7 @@ import kotlin.contracts.contract
 @Serializable
 open class MenuConfig(
     val title: @Contextual MiniMessageComponent = "".asMiniMessageComponent,
+    @TomlMultiline
     val structure: List<String> = listOf(),
     val customItems: Map<@Serializable(CharStringSerializer::class) Char, ItemTemplate> = mapOf(),
     val templates: Map<@Serializable(CharStringSerializer::class) Char, ItemTemplate> = mapOf()

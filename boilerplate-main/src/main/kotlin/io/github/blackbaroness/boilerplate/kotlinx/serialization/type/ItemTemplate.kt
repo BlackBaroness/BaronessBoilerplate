@@ -1,5 +1,6 @@
 package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
+import com.akuleshov7.ktoml.annotations.TomlMultiline
 import com.destroystokyo.paper.profile.ProfileProperty
 import com.google.common.collect.Multimap
 import io.github.blackbaroness.boilerplate.base.Boilerplate
@@ -33,14 +34,17 @@ data class ItemTemplate(
     val material: Material,
     val amount: Int? = null,
     val displayName: @Contextual MiniMessageComponent? = null,
+    @TomlMultiline
     val lore: List<@Contextual MiniMessageComponent>? = null,
     val customModelData: Int? = null,
+    @TomlMultiline
     val flags: Set<ItemFlag>? = null,
     val enchantments: Map<@Contextual Enchantment, Int>? = null,
     val unbreakable: Boolean? = null,
     val potion: @Contextual PotionTemplate? = null,
     val headTexture: String? = null,
     val storedEnchantments: Map<@Contextual Enchantment, Int>? = null,
+    @TomlMultiline
     val attributes: List<AttributeConfiguration>? = null,
     val leatherArmorColor: @Contextual Color? = null,
 ) : ItemProvider {
