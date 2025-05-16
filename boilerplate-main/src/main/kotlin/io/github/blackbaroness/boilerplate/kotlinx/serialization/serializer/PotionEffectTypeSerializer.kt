@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType
 object PotionEffectTypeSerializer : KSerializer<PotionEffectType> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(PotionEffectType::class.qualifiedName!!, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(PotionEffectType::class.java.name, PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: PotionEffectType) =
         encoder.encodeString(value.name)
