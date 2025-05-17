@@ -19,6 +19,7 @@ import kotlin.io.path.writeText
 
 @Suppress("UnusedReceiverParameter")
 fun Boilerplate.getBuiltInKotlinxSerializers(compact: Boolean): SerializersModule = SerializersModule {
+    contextual(LocalTimeSerializer)
     contextual(if (compact) ColorIntSerializer else ColorHexSerializer)
     contextual(if (compact) DurationBinarySerializer else DurationStringSerializer)
 
