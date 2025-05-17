@@ -3,10 +3,9 @@ package io.github.blackbaroness.boilerplate.paper
 import com.github.shynixn.mccoroutine.folia.*
 import io.github.blackbaroness.boilerplate.adventure.ExtendedAudience
 import io.github.blackbaroness.boilerplate.adventure.asLegacy
-import io.github.blackbaroness.boilerplate.base.*
+import io.github.blackbaroness.boilerplate.base.Boilerplate
+import io.github.blackbaroness.boilerplate.base.copyAndClose
 import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.json.Json
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
 import net.kyori.adventure.text.Component
@@ -33,8 +32,6 @@ import org.bukkit.event.world.WorldEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
-import java.io.ByteArrayOutputStream
-import java.io.DataOutputStream
 import java.nio.file.Path
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -198,66 +195,3 @@ fun <T : Event> findDispatcherForEvent(plugin: Plugin, event: T): CoroutineConte
 }
 
 val UUID.isOfflineUuid get() = version() == 3
-
-inline fun <reified MESSAGE> Plugin.sendBungeeCordMessage(
-    player: Player,
-    channel: String,
-    message: MESSAGE,
-    targetServer: String = "ALL",
-    serializer: Json = Json
-) {
-    if (!server.messenger.isOutgoingChannelRegistered(this, "BungeeCord")) {
-        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
-    }
-
-    // serialize the message
-    var messageSerialized = serializer.encodeToString(message).encodeToByteArray()
-    var messageCompressed = false
-
-    // try to compress the message
-    messageSerialized.compressZstd()?.also {
-        messageCompressed = true
-        messageSerialized = it
-    }
-
-    val payload = PluginMessagePayload(
-        className = MESSAGE::class.qualifiedName!!,
-        isMessageCompressed = messageCompressed,
-        message = messageSerialized,
-    )
-
-    val payloadEncoded = payload.toByteArray()
-    require(payloadEncoded.size <= Short.MAX_VALUE) { "Payload is too large" }
-
-    val packet = ByteArrayOutputStream().use { outer ->
-        DataOutputStream(outer).use { out ->
-            out.writeUTF("Forward")
-            out.writeUTF(targetServer)
-            out.writeUTF(channel)
-            out.writeShort(payloadEncoded.size)
-            out.write(payloadEncoded)
-        }
-        outer.toByteArray()
-    }
-
-    player.sendPluginMessage(this, "BungeeCord", packet)
-}
-
-inline fun <reified MESSAGE> Plugin.listenBungeeCordMessages(
-    channel: String,
-    crossinline onReceive: suspend (Player, MESSAGE) -> Unit,
-    deserializer: Json = Json
-) = server.messenger.registerIncomingPluginChannel(this, channel) { _, player, content ->
-    val payload = content.toPluginMessagePayload()
-    if (payload.className != MESSAGE::class.qualifiedName)
-        return@registerIncomingPluginChannel
-
-    val messageString = if (payload.isMessageCompressed) {
-        payload.message.decompressZstd().decodeToString()
-    } else {
-        payload.message.decodeToString()
-    }
-
-    val message = deserializer.decodeFromString<MESSAGE>(messageString)
-    launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) { onReceive(player, message) }
-}
