@@ -77,6 +77,7 @@ inline fun <reified MESSAGE> Plugin.listenBungeeCordMessages(
 suspend inline fun <reified MESSAGE> Plugin.awaitBungeeCordMessage(
     channel: String,
     timeout: Duration,
+    crossinline filter: suspend (MESSAGE) -> Boolean,
     deserializer: Cbor = Cbor,
 ): MESSAGE {
     var registration: PluginMessageListenerRegistration? = null
@@ -87,7 +88,7 @@ suspend inline fun <reified MESSAGE> Plugin.awaitBungeeCordMessage(
             registration = listenBungeeCordMessages<MESSAGE>(
                 channel = channel,
                 deserializer = deserializer
-            ) { _, message -> deferred.complete(message) }
+            ) { _, message -> if (filter(message)) deferred.complete(message) }
             deferred.await()
         }
     } finally {
