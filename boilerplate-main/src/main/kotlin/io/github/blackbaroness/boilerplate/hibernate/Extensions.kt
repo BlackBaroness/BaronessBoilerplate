@@ -78,7 +78,8 @@ fun SessionFactoryBuilder.h2(
 
 // A copy of SessionFactory#inTransaction, but with an inline action
 inline fun <T> SessionFactory.inTransactionInline(action: (Session) -> T): T {
-    openSession().use { session ->
+    val session = openSession()
+    try {
         val transaction = session.beginTransaction()
         try {
             val result = action.invoke(session)
@@ -97,5 +98,7 @@ inline fun <T> SessionFactory.inTransactionInline(action: (Session) -> T): T {
             }
             throw e
         }
+    } finally {
+        session.close()
     }
 }
