@@ -65,14 +65,28 @@ inline fun <reified MESSAGE> Plugin.listenBungeeCordMessages(
     channel: String,
     deserializer: Cbor = Cbor,
     crossinline onReceive: suspend (Player, MESSAGE) -> Unit,
-) = server.messenger.registerIncomingPluginChannel(this, channel) { _, player, content ->
-    val payload = PluginMessagePayload.fromByteArray(content)
-    if (payload.className != MESSAGE::class.qualifiedName)
-        return@registerIncomingPluginChannel
+): PluginMessageListenerRegistration =
+    server.messenger.registerIncomingPluginChannel(this, "BungeeCord") { _, player, content ->
+        val input = DataInputStream(ByteArrayInputStream(content))
+        val instruction = input.readUTF()
+        if (instruction != "Forward") return@registerIncomingPluginChannel
 
-    val message = payload.toMessage<MESSAGE>(deserializer)
-    launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) { onReceive(player, message) }
-}
+        input.readUTF() // skip targetServer
+        val subChannel = input.readUTF()
+        if (subChannel != channel) return@registerIncomingPluginChannel
+
+        val length = input.readShort().toInt()
+        val payloadBytes = input.readNBytes(length)
+        val payload = PluginMessagePayload.fromByteArray(payloadBytes)
+
+        if (payload.className != MESSAGE::class.qualifiedName) return@registerIncomingPluginChannel
+
+        val message = payload.toMessage<MESSAGE>(deserializer)
+        launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) {
+            onReceive(player, message)
+        }
+    }
+
 
 suspend inline fun <reified MESSAGE> Plugin.awaitBungeeCordMessage(
     channel: String,
