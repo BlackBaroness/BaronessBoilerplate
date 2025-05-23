@@ -15,6 +15,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.invoke.MethodHandle
@@ -60,16 +61,18 @@ fun Boilerplate.destroyAdventure() {
     bukkitAudiences = null
 }
 
-val Boilerplate.methodMaterialGetDefaultAttributeModifiers: MethodHandle? by lazy {
-    try {
-        val methodHandle = MethodHandles.lookup()
-            .unreflect(Material::class.java.getDeclaredMethod("getDefaultAttributeModifiers"))
-        logger.info("This server supports Material#getDefaultAttributeModifiers API!")
-        methodHandle
-    } catch (e: NoSuchMethodException) {
-        logger.info("This server doesn't support Material#getDefaultAttributeModifiers API!")
-        null
-    }
+val Boilerplate.Reflection.material_getDefaultAttributeModifiers: MethodHandle? by lazy {
+    Material::class.java.methods
+        .firstOrNull { it.name == "getDefaultAttributeModifiers" && it.parameterCount == 0 }
+        ?.let { MethodHandles.lookup().unreflect(it) }
+        ?.also { logger.info("Detected Material.getDefaultAttributeModifiers()") }
+}
+
+val Boilerplate.Reflection.itemMeta_setAttributeModifiers: MethodHandle? by lazy {
+    ItemMeta::class.java.methods
+        .firstOrNull { it.name == "setAttributeModifiers" && it.parameterCount == 1 }
+        ?.let { MethodHandles.lookup().unreflect(it) }
+        ?.also { logger.info("Detected ItemMeta.setAttributeModifiers()") }
 }
 
 fun Boilerplate.papiTagResolver(player: Player?, selfClosing: Boolean = true) =
@@ -96,4 +99,3 @@ fun Boilerplate.registerEventDispatcherResolver(resolver: (Event) -> CoroutineCo
 fun Boilerplate.getCustomEventDispatcherResolvers(): Collection<(Event) -> CoroutineContext?> {
     return customEventDispatcherResolvers
 }
-
