@@ -1,21 +1,13 @@
-package io.github.blackbaroness.boilerplate.invui.configurate
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
 import com.destroystokyo.paper.profile.ProfileProperty
-import com.google.common.collect.Multimap
 import io.github.blackbaroness.boilerplate.base.Boilerplate
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.AttributeConfiguration
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
-import io.github.blackbaroness.boilerplate.paper.asBukkitColor
-import io.github.blackbaroness.boilerplate.paper.asBungeeCordComponents
-import io.github.blackbaroness.boilerplate.paper.isNativeAdventureApiAvailable
-import io.github.blackbaroness.boilerplate.paper.methodMaterialGetDefaultAttributeModifiers
+import io.github.blackbaroness.boilerplate.paper.*
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.attribute.Attribute
-import org.bukkit.attribute.AttributeModifier
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -32,7 +24,7 @@ import java.util.*
 
 @Serializable
 data class ItemTemplate(
-    val material: Material,
+    val material: @Contextual Material,
     val amount: Int? = null,
     val displayName: @Contextual MiniMessageComponent? = null,
     val lore: List<@Contextual MiniMessageComponent>? = null,
@@ -82,10 +74,10 @@ data class ItemTemplate(
         }
 
         if (flags != null) {
-            Boilerplate.methodMaterialGetDefaultAttributeModifiers?.also { method ->
-                @Suppress("UNCHECKED_CAST")
-                meta.attributeModifiers = method.invoke(material) as Multimap<Attribute, AttributeModifier>
+            Boilerplate.Reflection.material_getDefaultAttributeModifiers?.let { getModifiers ->
+                Boilerplate.Reflection.itemMeta_setAttributeModifiers?.invoke(meta, getModifiers.invoke(material))
             }
+
             meta.addItemFlags(*flags.toTypedArray())
         }
 

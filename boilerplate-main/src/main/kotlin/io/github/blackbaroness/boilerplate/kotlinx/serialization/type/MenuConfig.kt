@@ -1,9 +1,7 @@
 @file:Suppress("unused")
 
-package io.github.blackbaroness.boilerplate.invui.configurate
+package io.github.blackbaroness.boilerplate.kotlinx.serialization.type
 
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MiniMessageComponent
-import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.asMiniMessageComponent
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import xyz.xenondevs.invui.gui.PagedGui

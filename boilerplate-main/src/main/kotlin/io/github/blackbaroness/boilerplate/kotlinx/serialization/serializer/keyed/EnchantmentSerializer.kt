@@ -5,9 +5,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.Registry
 import org.bukkit.enchantments.Enchantment
 
-object EnchantmentSerializer : KeyedSerializer<Enchantment>() {
-
-    override val clazz = Enchantment::class
+object EnchantmentSerializer : KeyedSerializer<Enchantment>(Enchantment::class) {
 
     override fun resolveEntityFromKey(key: NamespacedKey): Enchantment {
         return Registry.ENCHANTMENT.get(key)

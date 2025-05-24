@@ -35,6 +35,8 @@ object Boilerplate {
         .ofPattern("HH:mm d.MM.yyyy z", russianLocale)
         .withLocale(russianLocale)
         .withZone(ZoneId.systemDefault())
+
+    object Reflection
 }
 
 inline fun <reified T> Boilerplate.createAssistedFactory(): Module =

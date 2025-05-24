@@ -11,7 +11,6 @@ repositories {
     maven("https://repo.panda-lang.org/releases") // LiteCommands
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/") // PlaceholderAPI
     maven("https://repo.xenondevs.xyz/releases") // InvUI
-    //maven("https://libraries.minecraft.net/") // Brigadier (for BungeeCord)
 }
 
 dependencies {
@@ -26,8 +25,8 @@ dependencies {
 
     // Serialization
     compileOnly(libs.kotlinx.serialization.json)
+    compileOnly(libs.kotlinx.serialization.cbor)
     compileOnly(libs.durationserializer)
-    compileOnly(libs.ktoml.core)
 
     // SQL
     compileOnly(platform(libs.hibernate.platform))

@@ -13,7 +13,7 @@ import org.bukkit.Keyed
 import org.bukkit.NamespacedKey
 import kotlin.reflect.KClass
 
-abstract class KeyedSerializer<T : Keyed> : KSerializer<T> {
+abstract class KeyedSerializer<T : Keyed>(clazz: KClass<T>) : KSerializer<T> {
 
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor(clazz.qualifiedName!!, PrimitiveKind.STRING)
@@ -29,8 +29,6 @@ abstract class KeyedSerializer<T : Keyed> : KSerializer<T> {
     override fun serialize(encoder: Encoder, value: T) {
         encoder.encodeString(value.key.asMinimalString)
     }
-
-    protected abstract val clazz: KClass<T>
 
     abstract fun resolveEntityFromKey(key: NamespacedKey): T
 }

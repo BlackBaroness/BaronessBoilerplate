@@ -2,7 +2,7 @@ package io.github.blackbaroness.boilerplate.invui.button
 
 import io.github.blackbaroness.boilerplate.adventure.tagResolver
 import io.github.blackbaroness.boilerplate.base.Boilerplate
-import io.github.blackbaroness.boilerplate.invui.configurate.ItemTemplate
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.ItemTemplate
 import io.github.blackbaroness.boilerplate.paper.playSound
 import org.bukkit.Sound
 import org.bukkit.entity.Player

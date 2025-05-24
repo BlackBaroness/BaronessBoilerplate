@@ -12,6 +12,7 @@ mccoroutine = "2.22.0"
 [libraries]
 # KotlinX
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.8.1" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version = "1.8.1" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.2" }
 # LiteCommands
 litecommands-core = { module = "dev.rollczi:litecommands-core", version.ref = "litecommands" }
@@ -54,4 +55,3 @@ caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0
 luckperms = { module = "net.luckperms:api", version = "5.4" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-3" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
-ktoml-core = { module = "com.akuleshov7:ktoml-core", version = "0.7.0" }
