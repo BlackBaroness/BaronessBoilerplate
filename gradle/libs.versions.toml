@@ -52,6 +52,6 @@ bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.17.5" }
 placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.6" }
 rocksdb = { module = "org.rocksdb:rocksdbjni", version = "10.2.1" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.0" }
-luckperms = { module = "net.luckperms:api", version = "5.4" }
+luckperms = { module = "net.luckperms:api", version = "5.5" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-3" }
 joml = { module = "org.joml:joml", version = "1.10.8" }
