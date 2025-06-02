@@ -7,14 +7,12 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Bukkit
+import org.bukkit.FireworkEffect
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.EnchantmentStorageMeta
-import org.bukkit.inventory.meta.LeatherArmorMeta
-import org.bukkit.inventory.meta.PotionMeta
-import org.bukkit.inventory.meta.SkullMeta
+import org.bukkit.inventory.meta.*
 import org.bukkit.potion.PotionData
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionType
@@ -33,6 +31,7 @@ data class ItemTemplate(
     val enchantments: Map<@Contextual Enchantment, Int>? = null,
     val unbreakable: Boolean? = null,
     val potion: @Contextual PotionTemplate? = null,
+    val firework: @Contextual FireworkTemplate? = null,
     val headTexture: String? = null,
     val storedEnchantments: Map<@Contextual Enchantment, Int>? = null,
     val attributes: List<AttributeConfiguration>? = null,
@@ -46,6 +45,15 @@ data class ItemTemplate(
         val upgraded: Boolean,
         val color: @Contextual Color?,
         val effects: List<@Contextual PotionEffect>?
+    )
+
+    @Serializable
+    data class FireworkTemplate(
+        val colors: List<@Contextual Color>,
+        val fadeColors: List<@Contextual Color>? = null,
+        val flicker: Boolean = false,
+        val trail: Boolean = false,
+        val type: FireworkEffect.Type = FireworkEffect.Type.BALL
     )
 
     @Suppress("DEPRECATION")
@@ -126,6 +134,22 @@ data class ItemTemplate(
             meta.setColor(leatherArmorColor.asBukkitColor)
         }
 
+        if (firework != null) {
+            val effect = FireworkEffect.builder().run {
+                withColor(firework.colors.map { it.asBukkitColor })
+                with(firework.type)
+                firework.fadeColors?.let { withFade(it.map { color -> color.asBukkitColor }) }
+                if (firework.flicker) flicker(true)
+                if (firework.trail) trail(true)
+                build()
+            }
+
+            when (meta) {
+                is FireworkMeta -> meta.addEffect(effect)
+                is FireworkEffectMeta -> meta.effect = effect
+            }
+        }
+
         item.itemMeta = meta
         return@lazy item
     }
@@ -143,4 +167,5 @@ data class ItemTemplate(
 
     override fun get(lang: String?): ItemStack = unsafeItem
 }
+
 
