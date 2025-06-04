@@ -6,7 +6,7 @@ adventure = "4.21.0"
 adventure-platforms = "4.4.0"
 invui = "1.45"
 guice = "7.0.0"
-litecommands = "3.9.7"
+litecommands = "3.10.0"
 mccoroutine = "2.22.0"
 
 [libraries]
