@@ -23,6 +23,7 @@ fun Boilerplate.getBuiltInKotlinxSerializers(compact: Boolean): SerializersModul
     contextual(LocalTimeSerializer)
     contextual(UUIDSerializer)
     contextual(RegexSerializer)
+    contextual(ZoneIdSerializer)
     contextual(if (compact) ColorIntSerializer else ColorHexSerializer)
     contextual(if (compact) DurationBinarySerializer else DurationStringSerializer)
 
