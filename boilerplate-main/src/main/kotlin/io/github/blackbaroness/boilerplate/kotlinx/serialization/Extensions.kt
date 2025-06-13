@@ -14,6 +14,7 @@ import net.kyori.adventure.text.ComponentLike
 import org.bukkit.Bukkit
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
+import kotlin.io.path.createParentDirectories
 import kotlin.io.path.exists
 import kotlin.io.path.readText
 import kotlin.io.path.writeText
@@ -55,7 +56,7 @@ inline fun <reified T> StringFormat.read(file: Path): T =
     decodeFromString(file.readText())
 
 inline fun <reified T> StringFormat.write(file: Path, value: T) {
-    file.createDirectories()
+    file.createParentDirectories()
     file.writeText(encodeToString(value))
 }
 
