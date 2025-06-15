@@ -8,16 +8,14 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
-object UUIDSerializer : KSerializer<UUID> {
+object LocaleSerializer : KSerializer<Locale> {
 
     override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor(UUID::class.qualifiedName!!, PrimitiveKind.STRING)
+        PrimitiveSerialDescriptor(Locale::class.qualifiedName!!, PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: UUID) {
-        encoder.encodeString(value.toString())
-    }
+    override fun serialize(encoder: Encoder, value: Locale) =
+        encoder.encodeString(value.toLanguageTag())
 
-    override fun deserialize(decoder: Decoder): UUID {
-        return UUID.fromString(decoder.decodeString())
-    }
+    override fun deserialize(decoder: Decoder): Locale =
+        Locale.forLanguageTag(decoder.decodeString())
 }
