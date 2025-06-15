@@ -2,6 +2,7 @@
 
 package io.github.blackbaroness.boilerplate.paper
 
+import io.github.blackbaroness.boilerplate.adventure.parseMiniMessage
 import io.github.blackbaroness.boilerplate.base.Boilerplate
 import me.clip.placeholderapi.PlaceholderAPI
 import net.kyori.adventure.platform.bukkit.BukkitAudiences
@@ -84,8 +85,14 @@ fun Boilerplate.papiTagResolver(player: Player?, selfClosing: Boolean = true) =
 
         val papiPlaceholder = argumentQueue.popOr("use <papi:placeholder>").value()
         val parsedPlaceholder = PlaceholderAPI.setPlaceholders(player, "%$papiPlaceholder%")
-        val componentPlaceholder = LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder)
-        if (selfClosing) Tag.selfClosingInserting(componentPlaceholder) else Tag.inserting(componentPlaceholder)
+
+        val component = try {
+            papiPlaceholder.parseMiniMessage()
+        } catch (_: Exception) {
+            LegacyComponentSerializer.legacySection().deserialize(parsedPlaceholder)
+        }
+
+        if (selfClosing) Tag.selfClosingInserting(component) else Tag.inserting(component)
     }
 
 private val logger by lazy { JavaPlugin.getProvidingPlugin(Boilerplate::class.java).slF4JLogger }
