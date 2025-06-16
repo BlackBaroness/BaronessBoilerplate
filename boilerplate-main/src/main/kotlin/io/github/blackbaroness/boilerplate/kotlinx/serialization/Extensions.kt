@@ -13,7 +13,6 @@ import kotlinx.serialization.modules.SerializersModuleBuilder
 import net.kyori.adventure.text.ComponentLike
 import org.bukkit.Bukkit
 import java.nio.file.Path
-import kotlin.io.path.createDirectories
 import kotlin.io.path.createParentDirectories
 import kotlin.io.path.exists
 import kotlin.io.path.readText
@@ -26,6 +25,7 @@ fun Boilerplate.getBuiltInKotlinxSerializers(compact: Boolean): SerializersModul
     contextual(RegexSerializer)
     contextual(ZoneIdSerializer)
     contextual(LocaleSerializer)
+    contextual(IntRangeSerializer)
     contextual(if (compact) ColorIntSerializer else ColorHexSerializer)
     contextual(if (compact) DurationBinarySerializer else DurationStringSerializer)
 
