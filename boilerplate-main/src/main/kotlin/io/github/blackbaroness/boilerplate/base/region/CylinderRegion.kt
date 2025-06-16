@@ -7,7 +7,7 @@ import kotlin.math.*
 class CylinderRegion(
     val center: Vector3dc,
     val radius: Double,
-    val height: Double
+    val height: Double,
 ) : Region {
 
     override fun contains(point: Vector3dc): Boolean {
@@ -26,7 +26,7 @@ class CylinderRegion(
         stepDegrees: Double,
         verticalStep: Double = 1.0,
         includeBottom: Boolean = true,
-        includeTop: Boolean = true
+        includeTop: Boolean = true,
     ): Sequence<Vector3d> {
         val angularStep = Math.toRadians(stepDegrees)
         return generateSurfacePoints(angularStep, verticalStep, includeBottom = includeBottom, includeTop = includeTop)
@@ -35,7 +35,7 @@ class CylinderRegion(
     fun generateSurfacePointsByDistance(
         desiredDistance: Double,
         includeBottom: Boolean = true,
-        includeTop: Boolean = true
+        includeTop: Boolean = true,
     ): Sequence<Vector3d> {
         val angularStep = desiredDistance / radius
         val verticalStep = desiredDistance

@@ -91,7 +91,7 @@ fun <T : Event> generateEventListener(
     plugin: Plugin,
     eventClass: KClass<T>,
     priority: Byte = EventPriority.NORMAL,
-    action: (T) -> Unit
+    action: (T) -> Unit,
 ): Closeable {
     val delegate = object : Any() {
         @Suppress("unused")

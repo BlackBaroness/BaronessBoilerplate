@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.platform.PlatformSettings
 
 inline fun <SENDER, SETTINGS : PlatformSettings, BUILDER : LiteCommandsBuilder<SENDER, SETTINGS, BUILDER>, reified ARG> BUILDER.argument(
     resolver: ArgumentResolverBase<SENDER, ARG>,
-    key: ArgumentKey? = null
+    key: ArgumentKey? = null,
 ): BUILDER {
     return if (key == null) {
         argument(ARG::class.java, resolver)
@@ -19,5 +19,5 @@ inline fun <SENDER, SETTINGS : PlatformSettings, BUILDER : LiteCommandsBuilder<S
 }
 
 inline fun <SENDER, SETTINGS : PlatformSettings, BUILDER : LiteCommandsBuilder<SENDER, SETTINGS, BUILDER>, reified TYPE> BUILDER.result(
-    crossinline handler: (Invocation<SENDER>, TYPE, ResultHandlerChain<SENDER>) -> Unit
+    crossinline handler: (Invocation<SENDER>, TYPE, ResultHandlerChain<SENDER>) -> Unit,
 ): BUILDER = result(TYPE::class.java) { invocation, type, chain -> handler.invoke(invocation, type, chain) }

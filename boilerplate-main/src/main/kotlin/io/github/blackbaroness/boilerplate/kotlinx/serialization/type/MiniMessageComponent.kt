@@ -9,7 +9,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 
 class MiniMessageComponent(
     val originalString: String,
-    parsedComponent: Component
+    parsedComponent: Component,
 ) : ComponentLike by parsedComponent {
 
     fun resolve(vararg tagResolvers: TagResolver): MiniMessageComponent {

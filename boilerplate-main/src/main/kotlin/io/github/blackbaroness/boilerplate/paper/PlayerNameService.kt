@@ -14,7 +14,7 @@ import java.util.concurrent.Executor
 
 @Singleton
 class PlayerNameService @Inject constructor(
-    private val server: Server
+    private val server: Server,
 ) : Service {
 
     private val playerNamesCache = Caffeine.newBuilder().buildAsync(object : AsyncCacheLoader<UUID, String?> {

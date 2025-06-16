@@ -8,7 +8,7 @@ import kotlin.math.sin
 
 class SphereRegion(
     val center: Vector3dc,
-    val radius: Double
+    val radius: Double,
 ) : Region {
 
     override fun contains(point: Vector3dc): Boolean {

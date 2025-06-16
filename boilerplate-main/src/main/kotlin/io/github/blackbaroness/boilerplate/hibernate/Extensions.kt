@@ -53,7 +53,7 @@ fun SessionFactoryBuilder.h2(
     directory: Path,
     name: String,
     ignoreCase: Boolean? = null,
-    caseInsensitiveIdentifiers: Boolean? = null
+    caseInsensitiveIdentifiers: Boolean? = null,
 ) {
     user = "sa"
     password = ""

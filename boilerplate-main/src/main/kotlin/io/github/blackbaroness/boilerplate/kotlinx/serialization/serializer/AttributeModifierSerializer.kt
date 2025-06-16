@@ -24,6 +24,6 @@ object AttributeModifierSerializer : SurrogateSerializer<AttributeModifier, Attr
         val name: String,
         val operation: AttributeModifier.Operation,
         val amount: Double,
-        val slot: EquipmentSlot?
+        val slot: EquipmentSlot?,
     )
 }

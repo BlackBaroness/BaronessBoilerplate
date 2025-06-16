@@ -10,7 +10,7 @@ interface BoilerplateInvUiFactory {
     fun oneTimeClickButton(
         icon: ItemProvider,
         clickHandler: suspend (Click) -> Unit,
-        sound: Sound? = null
+        sound: Sound? = null,
     ): OneTimeClickButton
 
 }

@@ -28,24 +28,24 @@ fun Boilerplate.tagResolver(name: String, value: Char): TagResolver =
 fun Boilerplate.tagResolver(
     name: String,
     value: Number,
-    format: DecimalFormat = defaultDecimalFormat.get()
+    format: DecimalFormat = defaultDecimalFormat.get(),
 ): TagResolver = tagResolver(name, format.format(value))
 
 fun Boilerplate.tagResolver(
     name: String,
     value: Duration,
     accuracy: ChronoUnit = ChronoUnit.SECONDS,
-    format: DurationFormat = DurationFormats.mediumLengthRussian()
+    format: DurationFormat = DurationFormats.mediumLengthRussian(),
 ): TagResolver = tagResolver(name, value.truncate(accuracy).format(format))
 
 fun Boilerplate.tagResolver(
     name: String,
     value: TemporalAccessor,
-    nice: Boolean = true
+    nice: Boolean = true,
 ): TagResolver = tagResolver(name, value, if (nice) niceDateFormatter else shortDateFormatter)
 
 fun Boilerplate.tagResolver(
     name: String,
     value: TemporalAccessor,
-    formatter: DateTimeFormatter
+    formatter: DateTimeFormatter,
 ): TagResolver = tagResolver(name, formatter.format(value))

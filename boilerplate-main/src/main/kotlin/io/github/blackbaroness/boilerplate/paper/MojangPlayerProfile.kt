@@ -12,7 +12,7 @@ import kotlin.uuid.Uuid
 data class MojangPlayerProfile @OptIn(ExperimentalUuidApi::class) constructor(
     val id: Uuid,
     val name: String,
-    val properties: List<JsonObject>
+    val properties: List<JsonObject>,
 ) {
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -20,7 +20,7 @@ data class MojangPlayerProfile @OptIn(ExperimentalUuidApi::class) constructor(
     @Serializable
     data class Texture(
         val signature: String?,
-        val value: String
+        val value: String,
     )
 
     @delegate:Transient

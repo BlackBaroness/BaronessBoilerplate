@@ -9,5 +9,5 @@ data class PostgresConfiguration(
     val database: String = "mydatabase",
     val user: String = "user",
     val password: String = "password",
-    val parameters: List<String> = listOf()
+    val parameters: List<String> = listOf(),
 )

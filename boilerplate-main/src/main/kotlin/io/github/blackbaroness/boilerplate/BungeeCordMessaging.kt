@@ -37,7 +37,7 @@ inline fun <reified MESSAGE> Plugin.sendBungeeCordMessage(
     channel: String,
     message: MESSAGE,
     targetServer: String = "ALL",
-    serializer: Cbor = Cbor
+    serializer: Cbor = Cbor,
 ) {
     if (!server.messenger.isOutgoingChannelRegistered(this, "BungeeCord")) {
         server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
@@ -121,7 +121,7 @@ suspend inline fun <reified MESSAGE> Plugin.awaitBungeeCordMessage(
 inline fun <reified MESSAGE> ProxiedPlayer.sendBungeeCordMessage(
     channel: String,
     message: MESSAGE,
-    serializer: Cbor = Cbor
+    serializer: Cbor = Cbor,
 ) {
     val payload = PluginMessagePayload.fromMessage(message, serializer)
     val payloadEncoded = payload.toByteArray()
