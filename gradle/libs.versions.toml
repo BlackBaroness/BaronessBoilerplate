@@ -2,7 +2,7 @@
 minecraft-v1_v16_v5 = "1.16.5-R0.1-SNAPSHOT"
 minecraft-v1_v21_v4 = "1.21.4-R0.1-SNAPSHOT"
 configurate = "4.2.0"
-adventure = "4.22.0"
+adventure = "4.23.0"
 adventure-platforms = "4.4.0"
 invui = "1.46"
 guice = "7.0.0"
