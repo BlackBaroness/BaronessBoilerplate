@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.cbor.Cbor
 import net.md_5.bungee.api.connection.Connection
 import net.md_5.bungee.api.event.PluginMessageEvent
 import net.md_5.bungee.api.plugin.Plugin
@@ -21,7 +22,7 @@ import kotlin.reflect.KClass
 class BungeeMessageBroker(
     private val plugin: Plugin,
     private val debug: Boolean = false,
-    private val format: BinaryFormat,
+    private val format: BinaryFormat = Cbor,
 ) : MinecraftPluginChannelMessageBroker<Connection>() {
 
     override suspend fun <MESSAGE : Any> publish(
