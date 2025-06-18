@@ -30,6 +30,10 @@ class SpigotMessageBroker(
         messageClass: KClass<MESSAGE>,
         serializer: KSerializer<MESSAGE>?,
     ) {
+        if (!plugin.server.messenger.isOutgoingChannelRegistered(plugin, "BungeeCord")) {
+            plugin.server.messenger.registerOutgoingPluginChannel(plugin, "BungeeCord")
+        }
+
         val resolvedSerializer = format.findSerializer(messageClass, serializer)
         val encoded = format.encodeToByteArray(resolvedSerializer, message)
         val payload = PluginMessagePayload.fromMessage(encoded, messageClass).toByteArray()
