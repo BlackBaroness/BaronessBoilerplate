@@ -1,25 +1,46 @@
 package io.github.blackbaroness.boilerplate.kotlinx.serialization.serializer
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
-object IntRangeSerializer : SurrogateSerializer<IntRange, IntRangeSerializer.Surrogate>(
-    Surrogate.serializer(),
-    IntRange::class
-) {
+object IntRangeSerializer : KSerializer<IntRange> {
 
-    override fun toSurrogate(value: IntRange) = Surrogate(
-        value.first,
-        value.last,
-    )
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor(this::class.qualifiedName!!, PrimitiveKind.STRING)
 
-    override fun fromSurrogate(value: Surrogate): IntRange = IntRange(
-        value.min,
-        value.max
-    )
+    private const val DELIMITER = ".."
 
-    @Serializable
-    data class Surrogate(
-        val min: Int,
-        val max: Int,
-    )
+    override fun serialize(encoder: Encoder, value: IntRange) {
+        value.singleOrNull()?.also {
+            encoder.encodeString(it.toString())
+            return
+        }
+
+        encoder.encodeString(value.first.toString() + DELIMITER + value.last)
+    }
+
+    override fun deserialize(decoder: Decoder): IntRange {
+        val str = decoder.decodeString()
+        val split = str.split(DELIMITER)
+
+        if (split.size == 1)
+            return str.toIntOrNull()?.let { IntRange(it, it) } ?: invalidInput(str)
+
+        if (split.size == 2) {
+            val first = split[0].toIntOrNull() ?: invalidInput(str)
+            val second = split[1].toIntOrNull() ?: invalidInput(str)
+            return IntRange(first, second)
+        }
+
+        invalidInput(str)
+    }
+
+    private fun invalidInput(str: String): Nothing {
+        throw IllegalArgumentException("'$str' is not valid int range")
+    }
+
 }
