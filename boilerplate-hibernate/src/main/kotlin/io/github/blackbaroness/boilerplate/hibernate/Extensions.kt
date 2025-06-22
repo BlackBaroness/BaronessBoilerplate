@@ -1,7 +1,7 @@
 package io.github.blackbaroness.boilerplate.hibernate
 
-import io.github.blackbaroness.boilerplate.configurate.type.MariaDbConfiguration
-import io.github.blackbaroness.boilerplate.configurate.type.PostgresConfiguration
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.MariaDbConfiguration
+import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.PostgresConfiguration
 import org.hibernate.Session
 import org.hibernate.SessionFactory
 import org.hibernate.TransactionManagementException
@@ -53,7 +53,7 @@ fun SessionFactoryBuilder.h2(
     directory: Path,
     name: String,
     ignoreCase: Boolean? = null,
-    caseInsensitiveIdentifiers: Boolean? = null
+    caseInsensitiveIdentifiers: Boolean? = null,
 ) {
     user = "sa"
     password = ""
@@ -78,24 +78,28 @@ fun SessionFactoryBuilder.h2(
 
 // A copy of SessionFactory#inTransaction, but with an inline action
 inline fun <T> SessionFactory.inTransactionInline(action: (Session) -> T): T {
-    openSession().use { session ->
+    return openSession().use { session ->
         val transaction = session.beginTransaction()
+
         try {
             val result = action.invoke(session)
-            if (!transaction.isActive) {
+
+            if (!transaction.isActive)
                 throw TransactionManagementException("Execution of action caused managed transaction to be completed")
-            }
+
             transaction.commit()
-            return result
-        } catch (e: Throwable) {
+
+            result
+        } catch (exception: Exception) {
+            // an error happened in the action or during commit()
             if (transaction.isActive) {
                 try {
                     transaction.rollback()
-                } catch (e2: Throwable) {
-                    e.addSuppressed(e2)
+                } catch (e: java.lang.RuntimeException) {
+                    exception.addSuppressed(e)
                 }
             }
-            throw e
+            throw exception
         }
     }
 }
