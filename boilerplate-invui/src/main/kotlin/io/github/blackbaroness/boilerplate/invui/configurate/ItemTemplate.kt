@@ -7,11 +7,14 @@ import io.github.blackbaroness.boilerplate.configurate.type.MiniMessageComponent
 import io.github.blackbaroness.boilerplate.paper.*
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
 import org.bukkit.Bukkit
+import org.bukkit.FireworkEffect
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
+import org.bukkit.inventory.meta.FireworkEffectMeta
+import org.bukkit.inventory.meta.FireworkMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.inventory.meta.SkullMeta
@@ -36,6 +39,7 @@ data class ItemTemplate(
     val potion: PotionTemplate? = null,
     val headTexture: String? = null,
     val storedEnchantments: Map<Enchantment, Int>? = null,
+    val firework: FireworkTemplate? = null,
     val attributes: List<AttributeConfiguration>? = null,
     val leatherArmorColor: Color? = null,
 ) : ItemProvider {
@@ -47,6 +51,15 @@ data class ItemTemplate(
         val upgraded: Boolean,
         val color: Color?,
         val effects: List<PotionEffect>?
+    )
+
+    @ConfigSerializable
+    data class FireworkTemplate(
+        val colors: List<Color>,
+        val fadeColors: List<Color>? = null,
+        val flicker: Boolean = false,
+        val trail: Boolean = false,
+        val type: FireworkEffect.Type = FireworkEffect.Type.BALL,
     )
 
     @Suppress("DEPRECATION")
@@ -103,6 +116,22 @@ data class ItemTemplate(
 
             potion.effects?.forEach { potionEffect ->
                 meta.addCustomEffect(potionEffect, true)
+            }
+        }
+
+        if (firework != null) {
+            val effect = FireworkEffect.builder().run {
+                withColor(firework.colors.map { it.asBukkitColor })
+                with(firework.type)
+                firework.fadeColors?.let { withFade(it.map { color -> color.asBukkitColor }) }
+                if (firework.flicker) flicker(true)
+                if (firework.trail) trail(true)
+                build()
+            }
+
+            when (meta) {
+                is FireworkMeta -> meta.addEffect(effect)
+                is FireworkEffectMeta -> meta.effect = effect
             }
         }
 
