@@ -44,7 +44,7 @@ data class ItemTemplate(
         val extended: Boolean,
         val upgraded: Boolean,
         val color: @Contextual Color?,
-        val effects: List<@Contextual PotionEffect>?
+        val effects: List<@Contextual PotionEffect>?,
     )
 
     @Serializable
@@ -53,7 +53,7 @@ data class ItemTemplate(
         val fadeColors: List<@Contextual Color>? = null,
         val flicker: Boolean = false,
         val trail: Boolean = false,
-        val type: FireworkEffect.Type = FireworkEffect.Type.BALL
+        val type: FireworkEffect.Type = FireworkEffect.Type.BALL,
     )
 
     @Suppress("DEPRECATION")

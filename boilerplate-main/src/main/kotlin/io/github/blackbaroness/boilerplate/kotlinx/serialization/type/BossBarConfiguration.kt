@@ -18,7 +18,7 @@ data class BossBarConfiguration(
 
     class BossBarReference(
         val config: BossBarConfiguration,
-        tagResolvers: Array<out TagResolver>
+        tagResolvers: Array<out TagResolver>,
     ) {
 
         val bar = BossBar.bossBar(

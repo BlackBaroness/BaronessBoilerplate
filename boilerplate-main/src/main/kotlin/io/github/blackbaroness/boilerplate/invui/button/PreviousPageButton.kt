@@ -16,7 +16,7 @@ import kotlin.math.max
 class PreviousPageButton(
     private val pagePresentTemplate: ItemTemplate,
     private val pageAbsentTemplate: ItemTemplate,
-    private val sound: Sound? = null
+    private val sound: Sound? = null,
 ) : PageItem(false) {
 
     override fun getItemProvider(gui: PagedGui<*>): ItemProvider {

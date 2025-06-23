@@ -20,7 +20,7 @@ class OneTimeClickButton @Inject constructor(
     private val userExceptionHandler: UserExceptionHandler,
     @Assisted private val icon: ItemProvider,
     @Assisted private val clickHandler: suspend (Click) -> Unit,
-    @Assisted private val sound: Sound? = null
+    @Assisted private val sound: Sound? = null,
 ) : AbstractItem() {
 
     private var clicked = false

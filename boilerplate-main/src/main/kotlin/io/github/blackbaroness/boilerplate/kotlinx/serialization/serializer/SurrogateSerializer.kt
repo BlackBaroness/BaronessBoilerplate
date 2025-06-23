@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 
 abstract class SurrogateSerializer<TARGET : Any, SURROGATE>(
     private val delegate: KSerializer<SURROGATE>,
-    targetClass: KClass<TARGET>
+    targetClass: KClass<TARGET>,
 ) : KSerializer<TARGET> {
 
     override val descriptor = SerialDescriptor(targetClass.qualifiedName!!, delegate.descriptor)

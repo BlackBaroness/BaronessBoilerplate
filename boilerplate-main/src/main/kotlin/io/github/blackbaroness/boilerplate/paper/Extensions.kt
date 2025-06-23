@@ -146,7 +146,7 @@ inline fun <reified T : Event> Plugin.eventListener(
 inline fun <reified T : Event> generateEventListener(
     plugin: Plugin,
     priority: EventPriority,
-    crossinline action: (T) -> Unit
+    crossinline action: (T) -> Unit,
 ): Listener {
     val listener = object : Listener {}
     plugin.server.pluginManager.registerEvent(

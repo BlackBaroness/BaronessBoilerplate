@@ -19,13 +19,13 @@ open class MenuConfig(
     val title: @Contextual MiniMessageComponent = "".asMiniMessageComponent,
     val structure: List<String> = listOf(),
     val customItems: Map<Char, ItemTemplate> = mapOf(),
-    val templates: Map<Char, ItemTemplate> = mapOf()
+    val templates: Map<Char, ItemTemplate> = mapOf(),
 )
 
 @OptIn(ExperimentalContracts::class)
 inline fun Window.Builder.Normal.Single.import(
     config: MenuConfig,
-    guiModifier: PagedGui.Builder<Item>.() -> Unit
+    guiModifier: PagedGui.Builder<Item>.() -> Unit,
 ): PagedGui<Item> {
     contract {
         callsInPlace(guiModifier, InvocationKind.EXACTLY_ONCE)

@@ -8,5 +8,5 @@ import org.bukkit.attribute.AttributeModifier
 @Serializable
 data class AttributeConfiguration(
     val attribute: @Contextual Attribute,
-    val modifier: @Contextual AttributeModifier
+    val modifier: @Contextual AttributeModifier,
 )

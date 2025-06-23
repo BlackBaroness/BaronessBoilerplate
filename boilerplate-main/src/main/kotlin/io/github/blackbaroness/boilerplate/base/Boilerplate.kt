@@ -47,7 +47,7 @@ fun Boilerplate.createRocksDbRepository(
     timeToLive: Duration? = null,
     compressionType: CompressionType = CompressionType.ZSTD_COMPRESSION,
     columnFamilyDescriptors: List<ColumnFamilyDescriptor>? = null,
-    columnFamilyHandles: List<ColumnFamilyHandle>? = null
+    columnFamilyHandles: List<ColumnFamilyHandle>? = null,
 ): TtlDB {
     dir.createDirectories()
     RocksDB.loadLibrary()

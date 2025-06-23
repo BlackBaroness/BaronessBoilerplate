@@ -25,7 +25,7 @@ import kotlin.uuid.toJavaUuid
 @OptIn(ExperimentalUuidApi::class)
 @Singleton
 class MojangPlayerProfileService @Inject constructor(
-    private val playerNameService: PlayerNameService
+    private val playerNameService: PlayerNameService,
 ) : Service {
 
     private val httpClient = HttpClient.newBuilder()
@@ -116,6 +116,6 @@ class MojangPlayerProfileService @Inject constructor(
     @Serializable
     data class LookupResult(
         val name: String,
-        val id: Uuid
+        val id: Uuid,
     )
 }
