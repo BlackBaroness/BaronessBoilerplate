@@ -107,7 +107,7 @@ fun <T : Event> generateEventListener(
         .intercept(MethodDelegation.to(delegate))
         .annotateMethod(EventHandler(priority = priority))
         .make()
-        .load(plugin::class.java.classLoader)
+        .load(delegate::class.java.classLoader)
         .loaded.getConstructor().newInstance()
 
     plugin.proxy.pluginManager.registerListener(plugin, listener)
