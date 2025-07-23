@@ -16,6 +16,7 @@ import net.md_5.bungee.api.ServerConnectRequest
 import net.md_5.bungee.api.chat.BaseComponent
 import net.md_5.bungee.api.chat.TextComponent
 import net.md_5.bungee.api.connection.Connection
+import net.md_5.bungee.api.connection.ProxiedPlayer
 import net.md_5.bungee.api.event.AsyncEvent
 import net.md_5.bungee.api.plugin.Event
 import net.md_5.bungee.api.plugin.Listener
@@ -118,7 +119,12 @@ val bungeeAudiencesSafe: BungeeAudiences
     get() = bungeeAudiences ?: throw IllegalStateException("Adventure is not initialized")
 
 val CommandSender.adventure: Audience
-    get() = ExtendedAudience(bungeeAudiencesSafe.sender(this))
+    get() = ExtendedAudience(
+        if (this is ProxiedPlayer)
+            bungeeAudiencesSafe.player(this)
+        else
+            bungeeAudiencesSafe.sender(this)
+    )
 
 val Collection<CommandSender>.adventure: Audience
     get() = Audience.audience(map { it.adventure })
