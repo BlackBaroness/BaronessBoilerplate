@@ -80,7 +80,14 @@ val java.awt.Color.asBukkitColor: Color
     get() = Color.fromRGB(red, green, blue)
 
 val CommandSender.adventure: Audience
-    get() = ExtendedAudience(if (Boilerplate.isNativeAdventureApiAvailable) this else bukkitAudiencesSafe.sender(this))
+    get() = ExtendedAudience(
+        if (Boilerplate.isNativeAdventureApiAvailable)
+            this
+        else if (this is Player)
+            bukkitAudiencesSafe.player(this)
+        else
+            bukkitAudiencesSafe.sender(this)
+    )
 
 val Collection<CommandSender>.adventure: Audience
     get() = Audience.audience(map { it.adventure })
