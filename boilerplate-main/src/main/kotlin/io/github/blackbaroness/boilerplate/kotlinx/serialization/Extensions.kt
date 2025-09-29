@@ -60,13 +60,13 @@ inline fun <reified T> StringFormat.write(file: Path, value: T) {
     file.writeText(encodeToString(value))
 }
 
-inline fun <reified T> StringFormat.update(file: Path, default: () -> T): T {
-    if (file.exists()) {
-        val value = read<T>(file)
-        write(file, value)
+inline fun <reified T> StringFormat.update(readFrom: Path, writeTo: Path = readFrom, default: () -> T): T {
+    if (readFrom.exists()) {
+        val value = read<T>(readFrom)
+        write(writeTo, value)
         return value
     }
 
-    write(file, default.invoke())
-    return read(file)
+    write(writeTo, default.invoke())
+    return read(writeTo)
 }
