@@ -20,7 +20,7 @@ object AttributeModifierSerializer : SurrogateSerializer<AttributeModifier, Attr
 
     @Serializable
     data class Surrogate(
-        val uuid: @Contextual UUID,
+        val uuid: @Contextual UUID = UUID.randomUUID(),
         val name: String,
         val operation: AttributeModifier.Operation,
         val amount: Double,
