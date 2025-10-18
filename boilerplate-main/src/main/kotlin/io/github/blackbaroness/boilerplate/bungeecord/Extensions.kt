@@ -2,6 +2,7 @@ package io.github.blackbaroness.boilerplate.bungeecord
 
 import com.github.shynixn.mccoroutine.bungeecord.launch
 import io.github.blackbaroness.boilerplate.adventure.ExtendedAudience
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import net.bytebuddy.ByteBuddy
@@ -59,6 +60,11 @@ val ServerConnectRequestBuilder_sendFeedback_setter: MethodHandle? by lazy {
     }
 }
 
+inline fun <reified T : Event> Plugin.blockingEventListener(
+    priority: Byte = EventPriority.NORMAL,
+    noinline action: (T) -> Unit,
+) = generateEventListener(this, T::class, priority = priority, action = action)
+
 /**
  * {@code attended=false} makes your block run concurrently on {@code Dispatchers.Default}.
  * You cannot change the results of that event in this mode since it's already finished.
@@ -71,13 +77,13 @@ inline fun <reified T : Event> Plugin.eventListener(
     crossinline action: suspend (T) -> Unit,
 ) = generateEventListener(this, T::class, priority = priority) { event ->
     if (!attended) {
-        launch(Dispatchers.Default) { action.invoke(event) }
+        launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) { action.invoke(event) }
         return@generateEventListener
     }
 
     if (autoHandleIntents && event is AsyncEvent<*>) {
         event.registerIntent(this@eventListener)
-        launch(Dispatchers.Default) { action.invoke(event) }.invokeOnCompletion {
+        launch(Dispatchers.Default, CoroutineStart.UNDISPATCHED) { action.invoke(event) }.invokeOnCompletion {
             event.completeIntent(this@eventListener)
         }
         return@generateEventListener
