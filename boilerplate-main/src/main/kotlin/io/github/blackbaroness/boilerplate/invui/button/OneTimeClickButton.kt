@@ -18,10 +18,18 @@ import xyz.xenondevs.invui.item.impl.AbstractItem
 class OneTimeClickButton @Inject constructor(
     private val plugin: Plugin,
     private val userExceptionHandler: UserExceptionHandler,
-    @Assisted private val icon: ItemProvider,
-    @Assisted private val clickHandler: suspend (Click) -> Unit,
-    @Assisted private val sound: Sound? = null,
+    @param:Assisted private val icon: ItemProvider,
+    @param:Assisted private val clickHandler: suspend (Click) -> Unit,
+    @param:Assisted private val sound: Sound? = null,
 ) : AbstractItem() {
+
+    interface Factory {
+        fun create(
+            icon: ItemProvider,
+            sound: Sound? = null,
+            handler: suspend (Click) -> Unit,
+        ): OneTimeClickButton
+    }
 
     private var clicked = false
 
