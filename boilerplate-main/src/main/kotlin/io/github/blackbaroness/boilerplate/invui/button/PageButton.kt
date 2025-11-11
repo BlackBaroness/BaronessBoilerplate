@@ -22,7 +22,7 @@ abstract class PageButton(
     protected abstract val displayedTargetPage: Int
 
     override fun getItemProvider(gui: PagedGui<*>): ItemProvider {
-        val item = if (gui.hasNextPage()) pagePresentTemplate else pageAbsentTemplate
+        val item = if (canMove()) pagePresentTemplate else pageAbsentTemplate
         return item.resolve(
             Boilerplate.tagResolver("current_page", gui.currentPage + 1),
             Boilerplate.tagResolver("page_amount", max(1, gui.pageAmount)),
