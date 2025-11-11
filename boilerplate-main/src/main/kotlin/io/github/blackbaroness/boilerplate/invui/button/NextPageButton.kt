@@ -4,20 +4,23 @@ import io.github.blackbaroness.boilerplate.adventure.tagResolver
 import io.github.blackbaroness.boilerplate.base.Boilerplate
 import io.github.blackbaroness.boilerplate.kotlinx.serialization.type.ItemTemplate
 import io.github.blackbaroness.boilerplate.paper.playSound
+import net.kyori.adventure.text.Component
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import xyz.xenondevs.invui.gui.PagedGui
 import xyz.xenondevs.invui.item.ItemProvider
-import xyz.xenondevs.invui.item.impl.controlitem.PageItem
+import xyz.xenondevs.invui.item.impl.controlitem.ControlItem
+import xyz.xenondevs.invui.window.changeTitle
 import kotlin.math.max
 
 class NextPageButton(
     private val pagePresentTemplate: ItemTemplate,
     private val pageAbsentTemplate: ItemTemplate,
     private val sound: Sound? = null,
-) : PageItem(true) {
+    private val windowTitleChanger: ((currentPage: Int, targetPage: Int) -> Component)? = null,
+) : ControlItem<PagedGui<*>>() {
 
     override fun getItemProvider(gui: PagedGui<*>): ItemProvider {
         val item = if (gui.hasNextPage()) pagePresentTemplate else pageAbsentTemplate
@@ -29,7 +32,18 @@ class NextPageButton(
     }
 
     override fun handleClick(clickType: ClickType, player: Player, event: InventoryClickEvent) {
-        super.handleClick(clickType, player, event)
+        if (!clickType.isLeftClick) return
+        if (!gui.hasNextPage()) return
+
+        gui.goForward()
+
+        if (windowTitleChanger != null) {
+            val title = windowTitleChanger.invoke(gui.currentPage + 1, gui.currentPage + 2)
+            for (window in windows) {
+                window.changeTitle(title.asComponent())
+            }
+        }
+
         if (sound != null) {
             player.playSound(sound)
         }
