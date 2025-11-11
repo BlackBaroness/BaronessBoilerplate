@@ -8,8 +8,7 @@ class PreviousPageButton(
     pagePresentTemplate: ItemTemplate,
     pageAbsentTemplate: ItemTemplate,
     sound: Sound? = null,
-    windowTitleChanger: ((currentPage: Int, totalPages: Int) -> Component)? = null,
-) : PageButton(pagePresentTemplate, pageAbsentTemplate, sound, windowTitleChanger) {
+) : PageButton(pagePresentTemplate, pageAbsentTemplate, sound) {
 
     override val displayedTargetPage
         get() = gui.currentPage

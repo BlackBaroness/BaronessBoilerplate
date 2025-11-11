@@ -7,9 +7,8 @@ import org.bukkit.Sound
 class NextPageButton(
     pagePresentTemplate: ItemTemplate,
     pageAbsentTemplate: ItemTemplate,
-    sound: Sound? = null,
-    windowTitleChanger: ((currentPage: Int, totalPages: Int) -> Component)? = null,
-) : PageButton(pagePresentTemplate, pageAbsentTemplate, sound, windowTitleChanger) {
+    sound: Sound? = null
+) : PageButton(pagePresentTemplate, pageAbsentTemplate, sound) {
 
     override val displayedTargetPage: Int
         get() = gui.currentPage + 2
