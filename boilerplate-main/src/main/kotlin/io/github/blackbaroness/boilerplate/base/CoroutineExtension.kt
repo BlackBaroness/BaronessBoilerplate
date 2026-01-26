@@ -46,6 +46,7 @@ suspend fun delay(range: ClosedRange<KDuration>) {
     delay(Random.nextLong(from, to + 1))
 }
 
+@JvmName("delayJavaDuration")
 suspend fun delay(range: ClosedRange<Duration>) {
     require(!range.isEmpty()) {
         "Delay range must not be empty"
