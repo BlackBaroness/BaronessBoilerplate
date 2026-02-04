@@ -89,7 +89,6 @@ class RedissonMessageBroker(
         }
     }
 
-
     private inline fun logDebug(
         throwable: Throwable? = null,
         message: () -> String,
