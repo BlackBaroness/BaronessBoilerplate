@@ -38,6 +38,7 @@ dependencies {
 
     // NoSQL
     compileOnly(libs.rocksdb)
+    compileOnly(libs.redisson)
 
     // Dependency injection
     compileOnly(libs.guice.core)
