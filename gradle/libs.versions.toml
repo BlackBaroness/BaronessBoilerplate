@@ -51,7 +51,7 @@ bungeecord = { module = "net.md-5:bungeecord-api", version = "1.21-R0.4" }
 bytebuddy = { module = "net.bytebuddy:byte-buddy", version = "1.18.4" }
 placeholderapi = { module = "me.clip:placeholderapi", version = "2.11.7" }
 rocksdb = { module = "org.rocksdb:rocksdbjni", version = "10.4.2" }
-redisson = { module = "org.redisson:redisson", version = "3.25.2" }
+redisson = { module = "org.redisson:redisson", version = "4.1.0" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.3" }
 luckperms = { module = "net.luckperms:api", version = "5.5" }
 zstd = { module = "com.github.luben:zstd-jni", version = "1.5.7-6" }
