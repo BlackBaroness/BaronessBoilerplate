@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
+import org.slf4j.Logger
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.util.concurrent.CopyOnWriteArrayList
@@ -44,6 +45,8 @@ val Boilerplate.isNativeAdventureApiAvailable by lazy {
 }
 
 fun Boilerplate.initializeAdventure(plugin: Plugin) {
+    logger = plugin.slF4JLogger
+
     if (bukkitAudiences != null) {
         // Already initialized
         return
@@ -68,20 +71,20 @@ val Boilerplate.Reflection.material_getDefaultAttributeModifiers: MethodHandle? 
     Material::class.java.methods
         .firstOrNull { it.name == "getDefaultAttributeModifiers" && it.parameterCount == 0 }
         ?.let { MethodHandles.lookup().unreflect(it) }
-        ?.also { logger.info("Detected Material.getDefaultAttributeModifiers()") }
+        ?.also { loggerSafe.info("Detected Material.getDefaultAttributeModifiers()") }
 }
 
 val Boilerplate.Reflection.itemMeta_setAttributeModifiers: MethodHandle? by lazy {
     ItemMeta::class.java.methods
         .firstOrNull { it.name == "setAttributeModifiers" && it.parameterCount == 1 }
         ?.let { MethodHandles.lookup().unreflect(it) }
-        ?.also { logger.info("Detected ItemMeta.setAttributeModifiers()") }
+        ?.also { loggerSafe.info("Detected ItemMeta.setAttributeModifiers()") }
 }
 
 fun Boilerplate.papiTagResolver(player: Player?, selfClosing: Boolean = true) =
     TagResolver.resolver("papi") { argumentQueue, _ ->
         if (!Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            logger.info("PlaceholderAPI is missing, unable to resolve <papi> placeholders")
+            loggerSafe.info("PlaceholderAPI is missing, unable to resolve <papi> placeholders")
             return@resolver Tag.selfClosingInserting(Component.text("PlaceholderAPI is missing"))
         }
 
@@ -97,7 +100,9 @@ fun Boilerplate.papiTagResolver(player: Player?, selfClosing: Boolean = true) =
         if (selfClosing) Tag.selfClosingInserting(component) else Tag.inserting(component)
     }
 
-private val logger by lazy { JavaPlugin.getProvidingPlugin(Boilerplate::class.java).slF4JLogger }
+
+private var logger: Logger? = null
+private val loggerSafe get() = logger ?: JavaPlugin.getProvidingPlugin(Boilerplate::class.java).slF4JLogger
 
 private val customEventDispatcherResolvers = CopyOnWriteArrayList<(Event) -> CoroutineContext?>()
 
