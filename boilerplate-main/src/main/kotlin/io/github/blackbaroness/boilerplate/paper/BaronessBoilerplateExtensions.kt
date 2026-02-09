@@ -36,7 +36,9 @@ val Boilerplate.isNativeAdventureApiAvailable by lazy {
     try {
         ItemStack(Material.STONE).editMeta { it.displayName(Component.empty()) }
         return@lazy true
-    } catch (e: NoSuchMethodError) {
+    } catch (_: NoSuchMethodError) {
+        return@lazy false
+    }catch (_: LinkageError) {
         return@lazy false
     }
 }
