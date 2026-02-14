@@ -79,17 +79,44 @@ fun Component.apply(characterAndFormat: CharacterAndFormat) = when (val format =
     else -> throw IllegalArgumentException("Unsupported: $characterAndFormat")
 }
 
-fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
+fun String.parseMiniMessage(): Component {
+    return parseMiniMessage(TagResolver.empty())
+}
+
+fun String.parseMiniMessage(tagResolver: TagResolver): Component {
     if (isEmpty()) return Component.empty()
-    return MiniMessage.miniMessage().deserialize(this, *tagResolvers)
+    return MiniMessage.miniMessage().deserialize(this, tagResolver)
         .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 }
 
-fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>) =
-    parseMiniMessage(TagResolver.resolver(tagResolvers))
+fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
+    val builder = TagResolver.builder()
+    for (resolver in tagResolvers) {
+        builder.resolver(resolver)
+    }
+    return parseMiniMessage(builder.build())
+}
 
-fun String.parseMiniMessage(tagResolvers: Collection<TagResolver>) =
-    parseMiniMessage(TagResolver.resolver(tagResolvers))
+fun String.parseMiniMessage(tagResolvers: Array<TagResolver>): Component {
+    val builder = TagResolver.builder()
+    for (resolver in tagResolvers) {
+        builder.resolver(resolver)
+    }
+    return parseMiniMessage(builder.build())
+}
+
+fun String.parseMiniMessage(tagResolvers: Iterable<TagResolver>): Component {
+    val builder = TagResolver.builder()
+    for (resolver in tagResolvers) {
+        builder.resolver(resolver)
+    }
+    return parseMiniMessage(builder.build())
+}
+
+@Deprecated(message = "String.parseMiniMessage(Iterable) already handles that")
+fun String.parseMiniMessage(tagResolvers: Collection<TagResolver>): Component {
+    return parseMiniMessage(tagResolvers as Iterable<TagResolver>)
+}
 
 val ComponentLike.isEmpty
     get() = this.asComponent() == Component.empty()
