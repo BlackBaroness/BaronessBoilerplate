@@ -97,6 +97,7 @@ fun String.parseMiniMessage(vararg tagResolvers: TagResolver): Component {
     return parseMiniMessage(builder.build())
 }
 
+@JvmName("parseMiniMessageArray")
 fun String.parseMiniMessage(tagResolvers: Array<TagResolver>): Component {
     val builder = TagResolver.builder()
     for (resolver in tagResolvers) {
