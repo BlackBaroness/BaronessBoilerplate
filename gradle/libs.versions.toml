@@ -42,7 +42,7 @@ mccoroutine-folia = { module = "com.github.shynixn.mccoroutine:mccoroutine-folia
 # Misc
 durationserializer = { module = "io.github.blackbaroness:duration-serializer", version = "2.0.2" }
 nbtapi = { module = "de.tr7zw:item-nbt-api-plugin", version = "2.15.5" }
-hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "7.2.4.Final" }
+hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version = "7.2.5.Final" }
 h2 = { module = "com.h2database:h2", version = "2.4.240" }
 mariadb = { module = "org.mariadb.jdbc:mariadb-java-client", version = "3.5.7" }
 postgresql = { module = "org.postgresql:postgresql", version = "42.7.10" }
